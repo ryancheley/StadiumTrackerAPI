@@ -6,6 +6,7 @@
       <env key="DEBUG" value="True" />
       <env key="SENDGRID_PASSWORD" value="domti0-jewtyc-cyKzag" />
       <env key="SENDGRID_USERNAME" value="rcheley" />
+      <env key="ENVIRONMENT" value="devl" />
     </envs>
   </component>
 </project>
