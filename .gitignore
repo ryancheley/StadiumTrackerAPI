@@ -27,10 +27,7 @@ media
 .idea/modules.xml
 .idea/StadiumTrackerAPI.iml
 .idea/misc.xml
-.idea/terminal.xml
-.idea/sqldialects.xml
-*.iws /out/
-
+*.iws /out/ 
 
 # Python # 
 *.py[cod] 
