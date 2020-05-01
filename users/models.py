@@ -13,6 +13,8 @@ class CustomUser(AbstractUser):
     instagram_user = models.CharField(max_length=30, blank=True, null=True)
     favorite_team = models.IntegerField(
         choices=team_choices,
+        blank=True,
+        null=True,
 
     )
 
