@@ -26,6 +26,7 @@ media
 .idea/modules.xml
 .idea/StadiumTrackerAPI.iml
 .idea/misc.xml
+.idea/sqldialects.xml
 *.iws /out/ 
 
 # Python # 

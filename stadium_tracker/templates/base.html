@@ -39,12 +39,12 @@
                   {% if not request.user.is_authenticated %}
                 <li>
                     <button class="mui-btn mui-btn--primary">
-                        <a href="{% url 'login' %}">Login</a>
+                        <a href="/accounts/login/">Login</a>
                     </button>
                 </li>
                 <li>
                     <button class="mui-btn mui-btn--primary">
-                        <a href="{% url 'django_registration_register' %}">Register</a>
+                        <a href="/accounts/signup/">Register</a>
                     </button>
                 </li>
 
