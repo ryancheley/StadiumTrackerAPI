@@ -74,6 +74,10 @@ INSTALLED_APPS = [
 
 SITE_ID = 1
 
+ACCOUNT_EMAIL_REQUIRED = True
+
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -187,11 +191,13 @@ ACCOUNT_ACTIVATION_DAYS = 7
 LOGOUT_REDIRECT_URL = 'stadium_tracker:game_list'
 LOGIN_REDIRECT_URL = 'stadium_tracker:my_game_list'
 
+SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY')
+
 EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.environ['SENDGRID_USERNAME']
-EMAIL_HOST_PASSWORD = os.environ['SENDGRID_PASSWORD']
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
