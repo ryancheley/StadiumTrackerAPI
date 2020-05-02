@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="TerminalProjectOptionsProvider">
+    <envs>
+      <env key="SECRET_KEY" value="cdl%x0(d7kh+-u6uj(#mza-mq^*qoo_w78r7bhab!9-g7p42fb" />
+      <env key="DEBUG" value="True" />
+      <env key="SENDGRID_PASSWORD" value="domti0-jewtyc-cyKzag" />
+      <env key="SENDGRID_USERNAME" value="rcheley" />
+      <env key="ENVIRONMENT" value="devl" />
+    </envs>
+  </component>
+</project>
