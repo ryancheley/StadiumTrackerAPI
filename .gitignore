@@ -27,6 +27,7 @@ media
 .idea/modules.xml
 .idea/StadiumTrackerAPI.iml
 .idea/misc.xml
+.idea/sqldialects.xml
 *.iws /out/ 
 
 # Python # 
@@ -85,7 +86,8 @@ celerybeat-schedule.*
 .env 
 .venv 
 env/ 
-venv/ 
+venv/
+venv_37/
 ENV/ 
 env.bak/ 
 venv.bak/ 

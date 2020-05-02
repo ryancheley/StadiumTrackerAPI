@@ -82,6 +82,8 @@
       <div class="mui-container">
         <br><br>
 
+      <p>{{ auth_error }}</p>
+
         <div id="messages">
           {% for message in messages %}
             <p style="color: {% if message.tags == 'success' %}green{% elif message.tags == 'error' %}red{% endif %}">

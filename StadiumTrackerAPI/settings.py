@@ -54,11 +54,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'django.contrib.sites',
 
     # third party apps
     'rest_framework',
     'rest_framework_swagger',
     'django_nose',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.twitter',
 
     # Local
     'users.apps.UsersConfig',
@@ -66,6 +71,12 @@ INSTALLED_APPS = [
     'content.apps.ContentConfig',
     'api.apps.ApiConfig',
 ]
+
+SITE_ID = 1
+
+ACCOUNT_EMAIL_REQUIRED = True
+
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -95,6 +106,14 @@ TEMPLATES = [
         },
     },
 ]
+
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
 
 WSGI_APPLICATION = 'StadiumTrackerAPI.wsgi.application'
 
@@ -172,11 +191,13 @@ ACCOUNT_ACTIVATION_DAYS = 7
 LOGOUT_REDIRECT_URL = 'stadium_tracker:game_list'
 LOGIN_REDIRECT_URL = 'stadium_tracker:my_game_list'
 
+SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY')
+
 EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.environ['SENDGRID_USERNAME']
-EMAIL_HOST_PASSWORD = os.environ['SENDGRID_PASSWORD']
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
