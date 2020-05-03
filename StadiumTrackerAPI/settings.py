@@ -59,7 +59,6 @@ INSTALLED_APPS = [
     # third party apps
     'rest_framework',
     'drf_yasg',
-    'django_nose',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -116,18 +115,6 @@ AUTHENTICATION_BACKENDS = (
 )
 
 WSGI_APPLICATION = 'StadiumTrackerAPI.wsgi.application'
-
-# Use nose to run all tests
-TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
-
-# Tell nose to measure coverage on the 'foo' and 'bar' apps
-NOSE_ARGS = [
-    '--cover-erase',
-    '--with-coverage',
-    '--cover-package=api,content,stadium_tracker,users',
-    '--cover-html',
-]
-
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
