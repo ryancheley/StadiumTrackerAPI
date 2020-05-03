@@ -58,7 +58,7 @@ INSTALLED_APPS = [
 
     # third party apps
     'rest_framework',
-    'rest_framework_swagger',
+    'drf_yasg',
     'django_nose',
     'allauth',
     'allauth.account',
