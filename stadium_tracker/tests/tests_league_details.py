@@ -1,6 +1,8 @@
+# TODO: add test for get_leagues
 from django.test import TestCase
 from users.models import CustomUser
-from stadium_tracker.league_details import *
+from stadium_tracker.league_details import get_team_division, get_division_details
+
 
 class LeagueDetailsTest(TestCase):
 

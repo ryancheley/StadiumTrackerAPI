@@ -1,5 +1,6 @@
+# TODO: add tests for get_venue_total
 from django.test import TestCase
-from stadium_tracker.venue_details import *
+from stadium_tracker.venue_details import get_venue_details, get_venue_list
 
 
 class TestVenueDetails(TestCase):

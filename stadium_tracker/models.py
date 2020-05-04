@@ -1,6 +1,5 @@
 from django.db import models
 from django.db.models import Count
-from django.contrib.auth.models import User
 from StadiumTrackerAPI import settings
 from django.utils import timezone
 
@@ -41,5 +40,5 @@ class GameDetails(models.Model):
         return game_venue
 
     class Meta:
-        unique_together = ['user', 'game_id',]
-        ordering=['user', '-game_datetime']
+        unique_together = ['user', 'game_id']
+        ordering = ['user', '-game_datetime']

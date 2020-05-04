@@ -1,6 +1,7 @@
 from dateutil.tz import tzlocal
 from django.test import TestCase
-from stadium_tracker.game_details import *
+from stadium_tracker.game_details import get_boxscore, get_game_recap,\
+    get_default_game, get_game_date, get_game_object, get_games_for_date, get_venue_id, datetime
 
 
 class GameDetails(TestCase):
@@ -77,4 +78,3 @@ class GameDetails(TestCase):
     def test_get_games_for_date_with__nogames(self):
         x = get_games_for_date(1, '2019-12-19')
         self.assertIsNone(x)
-

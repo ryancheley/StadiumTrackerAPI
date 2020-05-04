@@ -4,14 +4,16 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from django.shortcuts import render
 from django.db import IntegrityError
-from stadium_tracker.game_details import *
-from stadium_tracker.venue_details import *
-from stadium_tracker.league_details import *
+from stadium_tracker.game_details \
+    import get_teams, get_game_date, get_boxscore, get_game_recap, get_venue_id, get_form_details, get_default_game
+from stadium_tracker.venue_details import get_venue_details, get_venue_list
+from stadium_tracker.league_details import get_division_details, get_leagues
 
 from stadium_tracker.models import GameDetails
 from stadium_tracker.forms import GameDetailsForm
 
 PAGINATION_DEFAULT = 5
+
 
 class GamesViewList(ListView):
     model = GameDetails
@@ -23,8 +25,8 @@ class GamesViewList(ListView):
         data = super().get_context_data(**kwargs)
         data['details'] = GameDetails.objects.all()
         data['pages'] = {
-                'header': 'List of Games'
-            }
+            'header': 'List of Games'
+        }
         return data
 
 
@@ -43,8 +45,8 @@ class MyGamesViewList(LoginRequiredMixin, ListView):
         user = self.request.user
         data = super().get_context_data(**kwargs)
         data['pages'] = {
-                'header': f'List of Games for {str(user).title()}'
-            }
+            'header': f'List of Games for {str(user).title()}'
+        }
         return data
 
 
@@ -64,8 +66,8 @@ class StadiumGamesViewList(ListView):
         data = super().get_context_data(**kwargs)
         data['venue'] = venue
         data['pages'] = {
-                'header': f'List of Games for {venue}'
-            }
+            'header': f'List of Games for {venue}'
+        }
         return data
 
 
@@ -103,7 +105,7 @@ class GameDetailCreate(LoginRequiredMixin, CreateView):
         teams = get_teams(1)
         display_dates = get_form_details(request)
         default_values = get_default_game(1)
-        if len(request.GET)>0:
+        if len(request.GET) > 0:
             game_id = display_dates[0].get('gamePk')
             headline = get_game_recap(game_id, 'headline')
             body = get_game_recap(game_id, 'body')
@@ -164,7 +166,6 @@ class GameDetailCreate(LoginRequiredMixin, CreateView):
                 },
                 'error': error
 
-
             }
             return render(self.request, 'stadium_tracker/gamedetails_form.html', context=context)
 
@@ -208,7 +209,6 @@ class MyVenues(LoginRequiredMixin, ListView):
             )
         data['teams'] = division_teams
         data['pages'] = {
-                'header': 'My Visited Stadia'
-            }
+            'header': 'My Visited Stadia'
+        }
         return data
-

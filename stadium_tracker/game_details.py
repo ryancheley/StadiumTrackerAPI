@@ -8,10 +8,12 @@ def get_game_object(game_id):
     game = requests.get(game_url)
     return game
 
+
 def get_game_story(game_id):
     story_url = f'http://statsapi.mlb.com/api/v1/game/{game_id}/content'
     story = requests.get(story_url)
     return story
+
 
 def get_game_date(game_id):
     from_zone = tz.tzutc()
@@ -22,6 +24,7 @@ def get_game_date(game_id):
     v = v.astimezone(to_zone)
     return v
 
+
 def get_game_recap(game_id, type):
     story = get_game_story(game_id)
     data = None
@@ -31,9 +34,11 @@ def get_game_recap(game_id, type):
             data = recap.get(f'{type}')
         return data
 
+
 def get_venue_id(game_id):
     v = get_game_object(game_id).json().get('dates')[0].get('games')[0].get('venue').get('id')
     return v
+
 
 def get_boxscore(game_id, type):
     boxscore_url = f'http://statsapi.mlb.com/api/v1/game/{game_id}/boxscore'
@@ -52,9 +57,13 @@ def get_boxscore(game_id, type):
             'hits': None,
             'runs': get_score(1, game_id, type),
             'errors': None,
-            'team': get_game_object(game_id).json().get('dates')[0].get('games')[0].get('teams').get(f'{type}').get('team').get('name'),
+            'team':
+                get_game_object(game_id).
+                json().get('dates')[0].get('games')[0].get('teams').
+                get(f'{type}').get('team').get('name'),
         }
     return team
+
 
 def get_score(sportId, gamePk, type):
     params = {
@@ -87,7 +96,7 @@ def get_teams(sportId) -> list:
     url = f'http://statsapi.mlb.com/api/v1/teams?sportId={sportId}'
     r = requests.get(url)
     teams = r.json().get('teams')
-    teams = sorted(teams, key = lambda team: (team['name']))
+    teams = sorted(teams, key=lambda team: (team['name']))
     team_display = []
     for i in range(len(teams)):
         team_display.append({'id': teams[i].get('id'), 'name': teams[i].get('name')})
@@ -99,7 +108,6 @@ def get_team(teamId):
     r = requests.get(url)
     team = r.json().get('teams')[0].get('name')
     return team
-
 
 
 def get_form_details(request):
@@ -162,7 +170,7 @@ def get_default_game(sportId):
         'endDate': game_date,
     }
     r = requests.get(url, params)
-    if r.json().get('totalItems') >0:
+    if r.json().get('totalItems') > 0:
         game_date = r.json().get('dates')[0].get('date')
         home_team = r.json().get('dates')[0].get('games')[0].get('teams').get('home').get('team').get('id')
         away_team = r.json().get('dates')[0].get('games')[0].get('teams').get('away').get('team').get('id')
@@ -190,11 +198,14 @@ def get_games_for_date(sportId, game_date):
     r = requests.get(url, params)
     if r.json().get('totalItems') > 0:
         for g in range(r.json().get('totalItems')):
-            game_time = datetime.strptime(r.json().get('dates')[0].get('games')[g].get('gameDate'),'%Y-%m-%dT%H:%M:%SZ').time()
+            game_time = datetime.strptime(r.json().get('dates')[0].get('games')[g]
+                                          .get('gameDate'), '%Y-%m-%dT%H:%M:%SZ').time()
             game.append({
-                'game_time':  game_time,
-                'home_team':  get_team(r.json().get('dates')[0].get('games')[g].get('teams').get('home').get('team').get('id')),
-                'away_team':  get_team(r.json().get('dates')[0].get('games')[g].get('teams').get('away').get('team').get('id'))
+                'game_time': game_time,
+                'home_team': get_team(r.json().get('dates')[0].get('games')[g]
+                                      .get('teams').get('home').get('team').get('id')),
+                'away_team': get_team(r.json().get('dates')[0].get('games')[g]
+                                      .get('teams').get('away').get('team').get('id'))
             })
         data = game[:3]
     else:

@@ -1,10 +1,11 @@
+# TODO: add tests for missing views
 from django.test import TestCase, Client, override_settings
 from django.urls import reverse
 from django.utils import timezone
 
 from users.models import CustomUser
 
-from stadium_tracker.views import *
+from stadium_tracker.views import GameDetails
 from datetime import datetime
 import pytz
 
