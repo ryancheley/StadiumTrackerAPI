@@ -1,5 +1,4 @@
-from django.test import TestCase, override_settings
-from users.models import CustomUser
+from django.test import TestCase
 from users.forms import CustomUserChangeForm
 
 

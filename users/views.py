@@ -1,5 +1,4 @@
 from django.contrib.auth.views import PasswordChangeView, PasswordChangeDoneView
-from django.shortcuts import render
 from django.views.generic.edit import UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from users.models import CustomUser

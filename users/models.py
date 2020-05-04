@@ -12,6 +12,4 @@ class CustomUser(AbstractUser):
         choices=team_choices,
         blank=True,
         null=True,
-
     )
-
