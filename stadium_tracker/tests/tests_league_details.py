@@ -8,6 +8,10 @@ class LeagueDetailsTest(TestCase):
         x = get_team_division(1, 119)
         self.assertEqual(x, 203)
 
+    def test_get_team_division_no_team(self):
+        x = get_team_division(1, None)
+        self.assertEqual(x, 200)
+
     def test_get_division_details(self):
         user = CustomUser.objects.create_user(username='ryan', favorite_team=119)
         x = get_division_details(1, user)
