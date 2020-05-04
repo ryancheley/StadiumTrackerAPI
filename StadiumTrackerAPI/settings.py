@@ -24,8 +24,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-if os.environ['ENVIRONMENT']=='prod':
-   DEBUG = False
+if os.environ['ENVIRONMENT'] == 'prod':
+    DEBUG = False
 else:
     DEBUG = True
 
@@ -92,8 +92,7 @@ ROOT_URLCONF = 'StadiumTrackerAPI.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
-        ,
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
