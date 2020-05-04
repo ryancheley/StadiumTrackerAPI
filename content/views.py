@@ -1,6 +1,4 @@
 from datetime import datetime
-
-from django.shortcuts import render
 from django.views.generic import TemplateView
 from content.models import Content
 from stadium_tracker.models import GameDetails
