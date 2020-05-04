@@ -1,5 +1,5 @@
 from rest_framework import generics
-from .serializers import UsersSerializer, GameDetailsSerializer
+from .serializers import GameDetailsSerializer
 from .permissions import IsOwnerOrReadOnly
 
 from stadium_tracker.models import GameDetails
@@ -32,4 +32,3 @@ class GameDetailsDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (IsOwnerOrReadOnly, )
     queryset = GameDetails.objects.all()
     serializer_class = GameDetailsSerializer
-
