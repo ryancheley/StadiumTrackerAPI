@@ -15,8 +15,8 @@ class ContentRedirectView(RedirectView):
 class ContentDetailView(DetailView):
     model = Content
     template_name = 'page.html'
-    slug_field = 'title'
-    slug_url_kwarg = 'title'
+    slug_field = 'slug'
+    slug_url_kwarg = 'slug'
     context_object_name = 'pages'
 
     def get_context_data(self, **kwargs):

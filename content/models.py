@@ -15,4 +15,4 @@ class Content(models.Model):
         return f'{self.title}'
 
     def get_absolute_url(self):
-        return reverse('content_detail', kwargs={'title': self.title})
+        return reverse('content_detail', kwargs={'slug': self.slug})
