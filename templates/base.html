@@ -33,7 +33,7 @@
                 <li>
                     <button class="mui-btn mui-btn--primary">
                     <!--<a href="/Pages/About">About</a>-->
-                        <a href="{% url 'content:content' 'About' %}">About</a>
+                        <a href="{% url 'content:content_detail' 'About' %}">About</a>
                         </button>
                 </li>
                   {% if not request.user.is_authenticated %}

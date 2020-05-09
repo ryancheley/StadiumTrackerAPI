@@ -35,3 +35,7 @@ class ContentTemplateViewTests(TestCase):
     def test_home_page_name(self):
         response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
+
+    def test_somthing_silly(self):
+        response = 1
+        self.assertEqual(response, 0)
