@@ -27,8 +27,6 @@ def get_division_details(sportId, user_id):
         if user_id:
             if division_id == 203:
                 default_division = True
-        else:
-            default_division = get_team_division(sportId, 138)
         data = {
             'division_id': division_id,
             'division_name': division_name,
