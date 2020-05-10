@@ -197,7 +197,7 @@ def get_games_for_date(sportId, game_date):
     game = []
     r = requests.get(url, params)
     if r.json().get('totalItems') > 0:
-        for g in range(r.json().get('totalItems')):
+        for g in range(min(r.json().get('totalItems'), 3)):
             game_time = datetime.strptime(r.json().get('dates')[0].get('games')[g]
                                           .get('gameDate'), '%Y-%m-%dT%H:%M:%SZ').time()
             game.append({
@@ -207,7 +207,7 @@ def get_games_for_date(sportId, game_date):
                 'away_team': get_team(r.json().get('dates')[0].get('games')[g]
                                       .get('teams').get('away').get('team').get('id'))
             })
-        data = game[:3]
+        data = game
     else:
         game = None
         data = game
