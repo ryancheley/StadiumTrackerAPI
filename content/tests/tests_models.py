@@ -8,13 +8,13 @@ class ContentTestCase(TestCase):
     def setUp(self) -> None:
         CustomUser.objects.create(
             username='ryan',
-            favorite_team=119,
         )
 
         Content.objects.create(
             title='Home Page',
             page_content='<h2>Home Page</h2><p>This is the home page!</p>',
             author=CustomUser.objects.get(username='ryan'),
+            slug='Home'
         )
 
     def test_string_representation(self):
@@ -26,4 +26,5 @@ class ContentTestCase(TestCase):
         self.assertEqual(page.title, 'Home Page')
         self.assertEqual(page.page_content, '<h2>Home Page</h2><p>This is the home page!</p>')
         self.assertEqual(page.author.username, 'ryan')
+        self.assertEqual(page.slug, 'Home')
         self.assertTrue(isinstance(page, Content))
