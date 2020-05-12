@@ -170,13 +170,12 @@ def get_default_game(sportId):
         'endDate': game_date,
     }
     r = requests.get(url, params)
+    home_team = 0
+    away_team = 0
     if r.json().get('totalItems') > 0:
         game_date = r.json().get('dates')[0].get('date')
         home_team = r.json().get('dates')[0].get('games')[0].get('teams').get('home').get('team').get('id')
         away_team = r.json().get('dates')[0].get('games')[0].get('teams').get('away').get('team').get('id')
-    else:
-        home_team = 0,
-        away_team = 0
 
     data = {
         'game_date': game_date,

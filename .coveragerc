@@ -5,6 +5,7 @@ omit=
     */cover/*
     */htmlcov/*
     manage.py
+    StadiumTrackerAPI/settings.py
 
 [report]
 fail_under = 100

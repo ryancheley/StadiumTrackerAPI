@@ -10,7 +10,6 @@ from django.urls import reverse, reverse_lazy
 
 class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = CustomUser
-    # fields = ['email', 'username', 'twitter_user', 'instagram_user', 'favorite_team']
     form_class = CustomUserChangeForm
     template_name = 'user.html'
 
