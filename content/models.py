@@ -1,6 +1,5 @@
 from django.db import models
 from StadiumTrackerAPI import settings
-from django.urls import reverse
 
 # Be sure to add a test to tests_models BEFORE adding new attributes to these models
 

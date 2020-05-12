@@ -30,4 +30,3 @@ class ContentTemplateViewTests(TestCase):
         page = create_content('Test', 'Test Page Content', 'Test')
         response = self.client.get(f'/{page.slug}')
         self.assertEqual(response.status_code, 404)
-
