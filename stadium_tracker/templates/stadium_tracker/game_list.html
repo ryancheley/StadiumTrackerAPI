@@ -30,7 +30,14 @@
             {{g.away_team}} vs {{g.home_team}}
             <br>
             Final Score: {{g.away_runs}} - {{g.home_runs}}
-            </a>
+            <br>
+            Viewed:
+            {% if g.view_type == 'P' %}
+                <i class="fas fa-baseball-ball"></i>
+            {% else %}
+                <i class="fas fa-tv"></i>
+            {% endif %}
+
     </td>
     <td>
         <a href="{% url 'stadium_tracker:gamedetails_list' g.id %}">Details</a>

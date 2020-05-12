@@ -21,6 +21,7 @@ class GameDetailsForm(ModelForm):
             "game_body",
             "game_id",
             "venue_id",
+            "view_type",
         ]
         widgets = {
             "home_team": forms.HiddenInput(),
