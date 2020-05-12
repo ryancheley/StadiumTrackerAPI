@@ -6,25 +6,33 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('stadium_tracker', '0005_auto_20190922_2202'),
+        ("stadium_tracker", "0005_auto_20190922_2202"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Venues',
+            name="Venues",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('venue_id', models.IntegerField()),
-                ('venue_name', models.CharField(max_length=254)),
-                ('home_team_id', models.IntegerField()),
-                ('division_id', models.IntegerField()),
-                ('street_address_1', models.CharField(max_length=254)),
-                ('street_address_2', models.CharField(max_length=254)),
-                ('city', models.CharField(max_length=100)),
-                ('state', models.CharField(max_length=2)),
-                ('zip', models.CharField(max_length=9)),
-                ('latitude', models.DecimalField(decimal_places=5, max_digits=8)),
-                ('longitude', models.DecimalField(decimal_places=5, max_digits=8)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("venue_id", models.IntegerField()),
+                ("venue_name", models.CharField(max_length=254)),
+                ("home_team_id", models.IntegerField()),
+                ("division_id", models.IntegerField()),
+                ("street_address_1", models.CharField(max_length=254)),
+                ("street_address_2", models.CharField(max_length=254)),
+                ("city", models.CharField(max_length=100)),
+                ("state", models.CharField(max_length=2)),
+                ("zip", models.CharField(max_length=9)),
+                ("latitude", models.DecimalField(decimal_places=5, max_digits=8)),
+                ("longitude", models.DecimalField(decimal_places=5, max_digits=8)),
             ],
         ),
     ]

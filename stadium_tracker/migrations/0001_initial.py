@@ -15,17 +15,29 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='GamesSeen',
+            name="GamesSeen",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('game_id', models.IntegerField()),
-                ('create_date', models.DateTimeField(auto_now_add=True)),
-                ('modify_date', models.DateTimeField(auto_now_add=True)),
-                ('delete_ind', models.BooleanField(default=False)),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("game_id", models.IntegerField()),
+                ("create_date", models.DateTimeField(auto_now_add=True)),
+                ("modify_date", models.DateTimeField(auto_now_add=True)),
+                ("delete_ind", models.BooleanField(default=False)),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
-            options={
-                'ordering': ['-modify_date'],
-            },
+            options={"ordering": ["-modify_date"],},
         ),
     ]

@@ -6,16 +6,10 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('users', '0005_auto_20200501_2142'),
+        ("users", "0005_auto_20200501_2142"),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='customuser',
-            name='instagram_user',
-        ),
-        migrations.RemoveField(
-            model_name='customuser',
-            name='twitter_user',
-        ),
+        migrations.RemoveField(model_name="customuser", name="instagram_user",),
+        migrations.RemoveField(model_name="customuser", name="twitter_user",),
     ]

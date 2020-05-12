@@ -6,14 +6,12 @@ from users.models import CustomUser
 
 
 class CustomUserCreationForm(RegistrationForm):
-
     class Meta(RegistrationForm.Meta):
         model = CustomUser
-        fields = ('username', 'email', 'favorite_team')
+        fields = ("username", "email", "favorite_team")
 
 
 class CustomUserChangeForm(UserChangeForm):
-
     class Meta:
         model = CustomUser
-        fields = ('username', 'email', 'favorite_team')
+        fields = ("username", "email", "favorite_team")

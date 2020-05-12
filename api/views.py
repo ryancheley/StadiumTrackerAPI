@@ -12,6 +12,7 @@ class GameDetailsList(generics.ListAPIView):
     post:
     Create a Game Seen for a named user
     """
+
     queryset = GameDetails.objects.all()
     serializer_class = GameDetailsSerializer
 
@@ -29,6 +30,6 @@ class GameDetailsDetail(generics.RetrieveUpdateDestroyAPIView):
 
     """
 
-    permission_classes = (IsOwnerOrReadOnly, )
+    permission_classes = (IsOwnerOrReadOnly,)
     queryset = GameDetails.objects.all()
     serializer_class = GameDetailsSerializer

@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('users', '0002_added_social_media_fields'),
+        ("users", "0002_added_social_media_fields"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='customuser',
-            name='favorite_team',
+            model_name="customuser",
+            name="favorite_team",
             field=models.IntegerField(blank=True, null=True),
         ),
     ]

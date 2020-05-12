@@ -8,15 +8,14 @@ from django.urls import reverse, reverse_lazy
 
 # Create your views here.
 
+
 class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = CustomUser
     form_class = CustomUserChangeForm
-    template_name = 'user.html'
+    template_name = "user.html"
 
     def get_success_url(self):
-        return reverse('users:user', kwargs={
-            'pk': self.object.pk,
-        })
+        return reverse("users:user", kwargs={"pk": self.object.pk})
 
     def test_func(self):
         obj = self.get_object()
@@ -24,9 +23,9 @@ class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 
 class UserPasswordChangeView(PasswordChangeView):
-    success_url = reverse_lazy('users:password_change_done')
-    template_name = 'password_change_form.html'
+    success_url = reverse_lazy("users:password_change_done")
+    template_name = "password_change_form.html"
 
 
 class UserPasswordChangeDoneView(PasswordChangeDoneView):
-    template_name = 'password_change_done.html'
+    template_name = "password_change_done.html"

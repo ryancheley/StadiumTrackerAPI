@@ -6,43 +6,47 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('stadium_tracker', '0006_venues'),
+        ("stadium_tracker", "0006_venues"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='venues',
-            name='city',
+            model_name="venues",
+            name="city",
             field=models.CharField(blank=True, max_length=100, null=True),
         ),
         migrations.AlterField(
-            model_name='venues',
-            name='latitude',
-            field=models.DecimalField(blank=True, decimal_places=5, max_digits=8, null=True),
+            model_name="venues",
+            name="latitude",
+            field=models.DecimalField(
+                blank=True, decimal_places=5, max_digits=8, null=True
+            ),
         ),
         migrations.AlterField(
-            model_name='venues',
-            name='longitude',
-            field=models.DecimalField(blank=True, decimal_places=5, max_digits=8, null=True),
+            model_name="venues",
+            name="longitude",
+            field=models.DecimalField(
+                blank=True, decimal_places=5, max_digits=8, null=True
+            ),
         ),
         migrations.AlterField(
-            model_name='venues',
-            name='state',
+            model_name="venues",
+            name="state",
             field=models.CharField(blank=True, max_length=2, null=True),
         ),
         migrations.AlterField(
-            model_name='venues',
-            name='street_address_1',
+            model_name="venues",
+            name="street_address_1",
             field=models.CharField(blank=True, max_length=254, null=True),
         ),
         migrations.AlterField(
-            model_name='venues',
-            name='street_address_2',
+            model_name="venues",
+            name="street_address_2",
             field=models.CharField(blank=True, max_length=254, null=True),
         ),
         migrations.AlterField(
-            model_name='venues',
-            name='zip',
+            model_name="venues",
+            name="zip",
             field=models.CharField(blank=True, max_length=9, null=True),
         ),
     ]

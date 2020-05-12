@@ -7,9 +7,5 @@ class CustomUser(AbstractUser):
     team_choices = []
     teams = get_teams(1)
     for t in teams:
-        team_choices.append((t.get('id'), t.get('name')))
-    favorite_team = models.IntegerField(
-        choices=team_choices,
-        blank=True,
-        null=True,
-    )
+        team_choices.append((t.get("id"), t.get("name")))
+    favorite_team = models.IntegerField(choices=team_choices, blank=True, null=True,)

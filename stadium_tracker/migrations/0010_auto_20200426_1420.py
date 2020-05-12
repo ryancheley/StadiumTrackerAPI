@@ -6,22 +6,14 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('stadium_tracker', '0009_auto_20191008_0349'),
+        ("stadium_tracker", "0009_auto_20191008_0349"),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='gamesseen',
-            name='user',
-        ),
-        migrations.DeleteModel(
-            name='Venues',
-        ),
+        migrations.RemoveField(model_name="gamesseen", name="user",),
+        migrations.DeleteModel(name="Venues",),
         migrations.AlterModelOptions(
-            name='gamedetails',
-            options={'ordering': ['user', '-game_datetime']},
+            name="gamedetails", options={"ordering": ["user", "-game_datetime"]},
         ),
-        migrations.DeleteModel(
-            name='GamesSeen',
-        ),
+        migrations.DeleteModel(name="GamesSeen",),
     ]

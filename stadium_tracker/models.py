@@ -31,14 +31,16 @@ class GameDetails(models.Model):
 
     def get_venue_count(self):
         game_venue = []
-        details = GameDetails.objects.all().values('venue_id').annotate(total=Count('venue_id')).order_by('-total')
+        details = (
+            GameDetails.objects.all()
+            .values("venue_id")
+            .annotate(total=Count("venue_id"))
+            .order_by("-total")
+        )
         for d in details:
-            game_venue.append({
-                'venue_id': d.get('venue_id'),
-                'total': d.get('total')
-            })
+            game_venue.append({"venue_id": d.get("venue_id"), "total": d.get("total")})
         return game_venue
 
     class Meta:
-        unique_together = ['user', 'game_id']
-        ordering = ['user', '-game_datetime']
+        unique_together = ["user", "game_id"]
+        ordering = ["user", "-game_datetime"]

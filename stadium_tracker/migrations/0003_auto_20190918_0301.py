@@ -6,31 +6,36 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('stadium_tracker', '0002_gamesseen_venue_id'),
+        ("stadium_tracker", "0002_gamesseen_venue_id"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='GameDetails',
+            name="GameDetails",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('home_team', models.CharField(max_length=100)),
-                ('home_runs', models.IntegerField()),
-                ('home_hits', models.IntegerField()),
-                ('home_errors', models.IntegerField()),
-                ('away_team', models.CharField(max_length=100)),
-                ('away_runs', models.IntegerField()),
-                ('away_hits', models.IntegerField()),
-                ('away_errors', models.IntegerField()),
-                ('game_datetime', models.DateTimeField()),
-                ('game_headline', models.CharField(max_length=254)),
-                ('game_body', models.TextField()),
-                ('game_id', models.IntegerField()),
-                ('venue_id', models.IntegerField()),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("home_team", models.CharField(max_length=100)),
+                ("home_runs", models.IntegerField()),
+                ("home_hits", models.IntegerField()),
+                ("home_errors", models.IntegerField()),
+                ("away_team", models.CharField(max_length=100)),
+                ("away_runs", models.IntegerField()),
+                ("away_hits", models.IntegerField()),
+                ("away_errors", models.IntegerField()),
+                ("game_datetime", models.DateTimeField()),
+                ("game_headline", models.CharField(max_length=254)),
+                ("game_body", models.TextField()),
+                ("game_id", models.IntegerField()),
+                ("venue_id", models.IntegerField()),
             ],
         ),
-        migrations.AlterModelOptions(
-            name='gamesseen',
-            options={},
-        ),
+        migrations.AlterModelOptions(name="gamesseen", options={},),
     ]
