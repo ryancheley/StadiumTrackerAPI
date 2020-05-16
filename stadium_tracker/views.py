@@ -4,8 +4,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from django.shortcuts import render
 from django.db import IntegrityError
+import statsapi
 from stadium_tracker.game_details import (
-    get_teams,
     get_game_date,
     get_boxscore,
     get_game_recap,
@@ -100,7 +100,7 @@ class GameDetailCreate(LoginRequiredMixin, CreateView):
     def get(self, request, *args, **kwargs):
         form = GameDetailsForm()
         leagues = get_leagues()
-        teams = get_teams(1)
+        teams = statsapi.lookup_team('', sportIds=1)
         display_dates = get_form_details(request)
         default_values = get_default_game(1)
         if len(request.GET) > 0:
@@ -147,7 +147,7 @@ class GameDetailCreate(LoginRequiredMixin, CreateView):
             away_details = get_boxscore(game_id, "away")
             game_date = get_game_date(game_id)
             game_date = game_date.date().strftime("%m/%d/%Y")
-            teams = get_teams()
+            teams = statsapi.lookup_team('', sportIds=1)
             home_team = home_details.get("team")
             away_team = away_details.get("team")
             text = f"{home_team} vs {away_team} on {game_date}"

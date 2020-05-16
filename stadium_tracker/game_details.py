@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 from dateutil import tz
 import requests
+import statsapi
 
 
 def get_game_object(game_id):
@@ -126,20 +127,6 @@ def get_score(sportId, gamePk, type):
             .get("score")
         )
     return score
-
-
-def get_teams(sportId) -> list:
-    """
-    :return: list of teams in alphabetical order
-    """
-    url = f"http://statsapi.mlb.com/api/v1/teams?sportId={sportId}"
-    r = requests.get(url)
-    teams = r.json().get("teams")
-    teams = sorted(teams, key=lambda team: (team["name"]))
-    team_display = []
-    for i in range(len(teams)):
-        team_display.append({"id": teams[i].get("id"), "name": teams[i].get("name")})
-    return team_display
 
 
 def get_team(teamId):
