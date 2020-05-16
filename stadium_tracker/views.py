@@ -192,7 +192,7 @@ class MyVenues(LoginRequiredMixin, ListView):
                     venue_id = v.get("venue_id")
                     user_visited_venue = GameDetails.objects.filter(user=user).filter(
                         venue_id=venue_id
-                    )
+                    ).filter(view_type='P')
                     if user_visited_venue:
                         if venue_id == user_visited_venue[0].venue_id:
                             v.update(user_visited=True)

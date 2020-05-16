@@ -5,6 +5,11 @@ from django.utils import timezone
 
 
 class GameDetails(models.Model):
+    VIEWING_OPTIONS = (
+        ('T', 'Television'),
+        ('P', 'In Person')
+    )
+
     home_team = models.CharField(max_length=100)
     home_runs = models.IntegerField()
     home_hits = models.IntegerField(blank=True, null=True)
@@ -21,6 +26,7 @@ class GameDetails(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     create_date = models.DateTimeField(auto_now_add=True)
     modify_date = models.DateTimeField(auto_now_add=True)
+    view_type = models.CharField(max_length=1, choices=VIEWING_OPTIONS, default='P')
 
     def __str__(self):
         return f'{self.home_team} vs {self.away_team} ({self.game_datetime.strftime("%m/%d/%Y")})'
