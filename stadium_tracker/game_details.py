@@ -38,9 +38,9 @@ def get_game_recap(game_id, type):
     return data
 
 
-def get_venue_id(game_id):
+def get_venue_id(game_id, sports_id):
     venue = (
-        get_game_object(game_id, 1)
+        get_game_object(game_id, sports_id)
         .json()
         .get("dates")[0]
         .get("games")[0]

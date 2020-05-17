@@ -123,7 +123,7 @@ class GameDetailCreate(LoginRequiredMixin, CreateView):
             form.fields["away_errors"].initial = away_details.get("errors")
             form.fields["game_datetime"].initial = game_date
             form.fields["game_id"].initial = game_id
-            form.fields["venue_id"].initial = get_venue_id(game_id)
+            form.fields["venue_id"].initial = get_venue_id(game_id, 1)
 
         context = {
             "form": form,

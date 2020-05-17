@@ -46,7 +46,7 @@ class GameDetails(TestCase):
         self.assertEqual(x, datetime(2019, 9, 15, 23, 5, tzinfo=tzlocal()))
 
     def test_get_venue_id(self):
-        v = get_venue_id(566063)
+        v = get_venue_id(566063, 1)
         self.assertEqual(v, 3289)
 
     def test_get_boxscore_home_full(self):
