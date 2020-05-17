@@ -3,9 +3,9 @@ from dateutil import tz
 import requests
 
 
-def get_game_object(game_id):
+def get_game_object(game_id, sport_id):
     game_url = (
-        f"http://statsapi.mlb.com/api/v1/schedule/games?sportId=1&gamePk={game_id}"
+        f"http://statsapi.mlb.com/api/v1/schedule/games?sportId={sport_id}&gamePk={game_id}"
     )
     game = requests.get(game_url)
     return game
@@ -17,10 +17,10 @@ def get_game_story(game_id):
     return story
 
 
-def get_game_date(game_id):
+def get_game_date(game_id, sports_id):
     from_zone = tz.tzutc()
     to_zone = tz.tzlocal()
-    v = get_game_object(game_id).json().get("dates")[0].get("games")[0].get("gameDate")
+    v = get_game_object(game_id, sports_id).json().get("dates")[0].get("games")[0].get("gameDate")
     v = datetime.strptime(v, "%Y-%m-%dT%H:%M:%SZ")
     v = v.replace(tzinfo=from_zone)
     v = v.astimezone(to_zone)
@@ -30,30 +30,31 @@ def get_game_date(game_id):
 def get_game_recap(game_id, type):
     story = get_game_story(game_id)
     data = None
-    if story.status_code == 200 and story.json().get("editorial") is not None:
-        recap = story.json().get("editorial").get("recap").get("mlb")
-        if recap is not None:
-            data = recap.get(f"{type}")
-        return data
+    try:
+        recap = story.json()['editorial']['recap']['mlb']
+        data = recap[f"{type}"]
+    except KeyError:
+        pass
+    return data
 
 
-def get_venue_id(game_id):
-    v = (
-        get_game_object(game_id)
+def get_venue_id(game_id, sports_id):
+    venue = (
+        get_game_object(game_id, sports_id)
         .json()
         .get("dates")[0]
         .get("games")[0]
         .get("venue")
         .get("id")
     )
-    return v
+    return venue
 
 
 def get_boxscore(game_id, type):
     boxscore_url = f"http://statsapi.mlb.com/api/v1/game/{game_id}/boxscore"
     r_boxscore = requests.get(boxscore_url)
     boxscore = r_boxscore.json()
-    teams = boxscore.get("teams")
+    teams = boxscore['teams']
     if len(boxscore.get("teams").get("home").get("teamStats")) > 0:
         team = {
             "hits": teams.get(f"{type}").get("teamStats").get("batting").get("hits"),
@@ -69,7 +70,7 @@ def get_boxscore(game_id, type):
             "hits": None,
             "runs": get_score(1, game_id, type),
             "errors": None,
-            "team": get_game_object(game_id)
+            "team": get_game_object(game_id, 1)
             .json()
             .get("dates")[0]
             .get("games")[0]
@@ -134,11 +135,11 @@ def get_teams(sportId) -> list:
     """
     url = f"http://statsapi.mlb.com/api/v1/teams?sportId={sportId}"
     r = requests.get(url)
-    teams = r.json().get("teams")
+    teams = r.json()['teams']
     teams = sorted(teams, key=lambda team: (team["name"]))
     team_display = []
     for i in range(len(teams)):
-        team_display.append({"id": teams[i].get("id"), "name": teams[i].get("name")})
+        team_display.append({"id": teams[i]["id"], "name": teams[i]["name"]})
     return team_display
 
 
@@ -176,7 +177,7 @@ def get_form_details(request):
     r = requests.get(url, params)
     games_dates = r.json().get("dates")
     display_dates = []
-    if games_dates is not None:
+    try:
         for i in range(len(games_dates)):
             date = games_dates[i].get("date")
             for j in range(len(games_dates[i].get("games"))):
@@ -226,6 +227,8 @@ def get_form_details(request):
                     str(home_id) == team2 and str(away_id) == team1
                 ):
                     display_dates.append(data)
+    except:
+        pass
     return display_dates
 
 

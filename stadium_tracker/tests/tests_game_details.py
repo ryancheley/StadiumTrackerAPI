@@ -9,6 +9,8 @@ from stadium_tracker.game_details import (
     get_games_for_date,
     get_venue_id,
     datetime,
+    get_score,
+
 )
 
 
@@ -38,15 +40,15 @@ class GameDetails(TestCase):
         self.assertIsNotNone(x.get("away_team"))
 
     def test_get_game_object(self):
-        x = get_game_object(566063)
+        x = get_game_object(566063, 1)
         self.assertEqual(x.status_code, 200)
 
     def test_get_game_date(self):
-        x = get_game_date(566063)
+        x = get_game_date(566063, 1)
         self.assertEqual(x, datetime(2019, 9, 15, 23, 5, tzinfo=tzlocal()))
 
     def test_get_venue_id(self):
-        v = get_venue_id(566063)
+        v = get_venue_id(566063, 1)
         self.assertEqual(v, 3289)
 
     def test_get_boxscore_home_full(self):
@@ -85,3 +87,11 @@ class GameDetails(TestCase):
     def test_get_games_for_date_with__nogames(self):
         x = get_games_for_date(1, "2019-12-19")
         self.assertIsNone(x)
+
+    def test_get_score_home(self):
+        x =  get_score(1, 8060, 'home')
+        self.assertEqual(2, x)
+
+    def test_get_score_away(self):
+        x =  get_score(1, 8060, 'away')
+        self.assertEqual(1, x)

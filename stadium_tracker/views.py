@@ -5,9 +5,9 @@ from django.urls import reverse_lazy
 from django.shortcuts import render
 from django.db import IntegrityError
 from stadium_tracker.game_details import (
-    get_teams,
     get_game_date,
     get_boxscore,
+    get_teams,
     get_game_recap,
     get_venue_id,
     get_form_details,
@@ -103,13 +103,13 @@ class GameDetailCreate(LoginRequiredMixin, CreateView):
         teams = get_teams(1)
         display_dates = get_form_details(request)
         default_values = get_default_game(1)
-        if len(request.GET) > 0:
+        try:
             game_id = display_dates[0].get("gamePk")
             headline = get_game_recap(game_id, "headline")
             body = get_game_recap(game_id, "body")
             home_details = get_boxscore(game_id, "home")
             away_details = get_boxscore(game_id, "away")
-            game_date = get_game_date(game_id)
+            game_date = get_game_date(game_id, 1)
 
             form.fields["game_headline"].initial = headline
             form.fields["game_body"].initial = body
@@ -123,7 +123,9 @@ class GameDetailCreate(LoginRequiredMixin, CreateView):
             form.fields["away_errors"].initial = away_details.get("errors")
             form.fields["game_datetime"].initial = game_date
             form.fields["game_id"].initial = game_id
-            form.fields["venue_id"].initial = get_venue_id(game_id)
+            form.fields["venue_id"].initial = get_venue_id(game_id, 1)
+        except:
+            pass
 
         context = {
             "form": form,
@@ -145,9 +147,9 @@ class GameDetailCreate(LoginRequiredMixin, CreateView):
             game_id = display_dates[0].get("gamePk")
             home_details = get_boxscore(game_id, "home")
             away_details = get_boxscore(game_id, "away")
-            game_date = get_game_date(game_id)
+            game_date = get_game_date(game_id, 1)
             game_date = game_date.date().strftime("%m/%d/%Y")
-            teams = get_teams()
+            teams = get_teams(1)
             home_team = home_details.get("team")
             away_team = away_details.get("team")
             text = f"{home_team} vs {away_team} on {game_date}"
