@@ -103,7 +103,7 @@ class GameDetailCreate(LoginRequiredMixin, CreateView):
         teams = get_teams(1)
         display_dates = get_form_details(request)
         default_values = get_default_game(1)
-        if len(request.GET) > 0:
+        try:
             game_id = display_dates[0].get("gamePk")
             headline = get_game_recap(game_id, "headline")
             body = get_game_recap(game_id, "body")
@@ -124,6 +124,8 @@ class GameDetailCreate(LoginRequiredMixin, CreateView):
             form.fields["game_datetime"].initial = game_date
             form.fields["game_id"].initial = game_id
             form.fields["venue_id"].initial = get_venue_id(game_id, 1)
+        except:
+            pass
 
         context = {
             "form": form,
@@ -147,7 +149,7 @@ class GameDetailCreate(LoginRequiredMixin, CreateView):
             away_details = get_boxscore(game_id, "away")
             game_date = get_game_date(game_id, 1)
             game_date = game_date.date().strftime("%m/%d/%Y")
-            teams = statsapi.lookup_team('', sportIds=1)
+            teams = get_teams(1)
             home_team = home_details.get("team")
             away_team = away_details.get("team")
             text = f"{home_team} vs {away_team} on {game_date}"
