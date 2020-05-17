@@ -1,7 +1,6 @@
 from datetime import datetime, timedelta
 from dateutil import tz
 import requests
-import statsapi
 
 
 def get_game_object(game_id):
@@ -31,11 +30,12 @@ def get_game_date(game_id):
 def get_game_recap(game_id, type):
     story = get_game_story(game_id)
     data = None
-    if story.status_code == 200 and story.json().get("editorial") is not None:
-        recap = story.json().get("editorial").get("recap").get("mlb")
-        if recap is not None:
-            data = recap.get(f"{type}")
-        return data
+    try:
+        recap = story.json()['editorial']['recap']['mlb']
+        data = recap[f"{type}"]
+    except KeyError:
+        pass
+    return data
 
 
 def get_venue_id(game_id):
