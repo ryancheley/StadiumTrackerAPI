@@ -54,7 +54,7 @@ def get_boxscore(game_id, type):
     boxscore_url = f"http://statsapi.mlb.com/api/v1/game/{game_id}/boxscore"
     r_boxscore = requests.get(boxscore_url)
     boxscore = r_boxscore.json()
-    teams = boxscore.get("teams")
+    teams = boxscore['teams']
     if len(boxscore.get("teams").get("home").get("teamStats")) > 0:
         team = {
             "hits": teams.get(f"{type}").get("teamStats").get("batting").get("hits"),
@@ -127,6 +127,20 @@ def get_score(sportId, gamePk, type):
             .get("score")
         )
     return score
+
+
+def get_teams(sportId) -> list:
+    """
+    :return: list of teams in alphabetical order
+    """
+    url = f"http://statsapi.mlb.com/api/v1/teams?sportId={sportId}"
+    r = requests.get(url)
+    teams = r.json()['teams']
+    teams = sorted(teams, key=lambda team: (team["name"]))
+    team_display = []
+    for i in range(len(teams)):
+        team_display.append({"id": teams[i]["id"], "name": teams[i]["name"]})
+    return team_display
 
 
 def get_team(teamId):

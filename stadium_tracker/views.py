@@ -4,10 +4,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from django.shortcuts import render
 from django.db import IntegrityError
-import statsapi
 from stadium_tracker.game_details import (
     get_game_date,
     get_boxscore,
+    get_teams,
     get_game_recap,
     get_venue_id,
     get_form_details,
@@ -100,7 +100,7 @@ class GameDetailCreate(LoginRequiredMixin, CreateView):
     def get(self, request, *args, **kwargs):
         form = GameDetailsForm()
         leagues = get_leagues()
-        teams = statsapi.lookup_team('', sportIds=1)
+        teams = get_teams(1)
         display_dates = get_form_details(request)
         default_values = get_default_game(1)
         if len(request.GET) > 0:
