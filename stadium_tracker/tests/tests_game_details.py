@@ -9,6 +9,8 @@ from stadium_tracker.game_details import (
     get_games_for_date,
     get_venue_id,
     datetime,
+    get_score,
+
 )
 
 
@@ -85,3 +87,11 @@ class GameDetails(TestCase):
     def test_get_games_for_date_with__nogames(self):
         x = get_games_for_date(1, "2019-12-19")
         self.assertIsNone(x)
+
+    def test_get_score_home(self):
+        x =  get_score(1, 8060, 'home')
+        self.assertEqual(2, x)
+
+    def test_get_score_away(self):
+        x =  get_score(1, 8060, 'away')
+        self.assertEqual(1, x)

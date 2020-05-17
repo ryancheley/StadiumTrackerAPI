@@ -177,7 +177,7 @@ def get_form_details(request):
     r = requests.get(url, params)
     games_dates = r.json().get("dates")
     display_dates = []
-    if games_dates is not None:
+    try:
         for i in range(len(games_dates)):
             date = games_dates[i].get("date")
             for j in range(len(games_dates[i].get("games"))):
@@ -227,6 +227,8 @@ def get_form_details(request):
                     str(home_id) == team2 and str(away_id) == team1
                 ):
                     display_dates.append(data)
+    except:
+        pass
     return display_dates
 
 
