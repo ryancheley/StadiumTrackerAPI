@@ -27,10 +27,10 @@ class GamesViewList(ListView):
     context_object_name = "game_list"
     template_name = "stadium_tracker/game_list.html"
     paginate_by = PAGINATION_DEFAULT
+    queryset = GameDetails.objects.all()
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
-        data["details"] = GameDetails.objects.all()
         data["pages"] = {"header": "List of Games"}
         return data
 
