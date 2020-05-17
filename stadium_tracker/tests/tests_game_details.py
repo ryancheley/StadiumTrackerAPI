@@ -38,7 +38,7 @@ class GameDetails(TestCase):
         self.assertIsNotNone(x.get("away_team"))
 
     def test_get_game_object(self):
-        x = get_game_object(566063)
+        x = get_game_object(566063, 1)
         self.assertEqual(x.status_code, 200)
 
     def test_get_game_date(self):

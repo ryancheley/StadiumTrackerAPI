@@ -3,9 +3,9 @@ from dateutil import tz
 import requests
 
 
-def get_game_object(game_id):
+def get_game_object(game_id, sport_id):
     game_url = (
-        f"http://statsapi.mlb.com/api/v1/schedule/games?sportId=1&gamePk={game_id}"
+        f"http://statsapi.mlb.com/api/v1/schedule/games?sportId={sport_id}&gamePk={game_id}"
     )
     game = requests.get(game_url)
     return game
@@ -20,7 +20,7 @@ def get_game_story(game_id):
 def get_game_date(game_id):
     from_zone = tz.tzutc()
     to_zone = tz.tzlocal()
-    v = get_game_object(game_id).json().get("dates")[0].get("games")[0].get("gameDate")
+    v = get_game_object(game_id, 1).json().get("dates")[0].get("games")[0].get("gameDate")
     v = datetime.strptime(v, "%Y-%m-%dT%H:%M:%SZ")
     v = v.replace(tzinfo=from_zone)
     v = v.astimezone(to_zone)
@@ -39,15 +39,15 @@ def get_game_recap(game_id, type):
 
 
 def get_venue_id(game_id):
-    v = (
-        get_game_object(game_id)
+    venue = (
+        get_game_object(game_id, 1)
         .json()
         .get("dates")[0]
         .get("games")[0]
         .get("venue")
         .get("id")
     )
-    return v
+    return venue
 
 
 def get_boxscore(game_id, type):
@@ -70,7 +70,7 @@ def get_boxscore(game_id, type):
             "hits": None,
             "runs": get_score(1, game_id, type),
             "errors": None,
-            "team": get_game_object(game_id)
+            "team": get_game_object(game_id, 1)
             .json()
             .get("dates")[0]
             .get("games")[0]
