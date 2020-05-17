@@ -17,10 +17,10 @@ def get_game_story(game_id):
     return story
 
 
-def get_game_date(game_id):
+def get_game_date(game_id, sports_id):
     from_zone = tz.tzutc()
     to_zone = tz.tzlocal()
-    v = get_game_object(game_id, 1).json().get("dates")[0].get("games")[0].get("gameDate")
+    v = get_game_object(game_id, sports_id).json().get("dates")[0].get("games")[0].get("gameDate")
     v = datetime.strptime(v, "%Y-%m-%dT%H:%M:%SZ")
     v = v.replace(tzinfo=from_zone)
     v = v.astimezone(to_zone)

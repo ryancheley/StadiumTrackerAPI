@@ -109,7 +109,7 @@ class GameDetailCreate(LoginRequiredMixin, CreateView):
             body = get_game_recap(game_id, "body")
             home_details = get_boxscore(game_id, "home")
             away_details = get_boxscore(game_id, "away")
-            game_date = get_game_date(game_id)
+            game_date = get_game_date(game_id, 1)
 
             form.fields["game_headline"].initial = headline
             form.fields["game_body"].initial = body
@@ -145,7 +145,7 @@ class GameDetailCreate(LoginRequiredMixin, CreateView):
             game_id = display_dates[0].get("gamePk")
             home_details = get_boxscore(game_id, "home")
             away_details = get_boxscore(game_id, "away")
-            game_date = get_game_date(game_id)
+            game_date = get_game_date(game_id, 1)
             game_date = game_date.date().strftime("%m/%d/%Y")
             teams = statsapi.lookup_team('', sportIds=1)
             home_team = home_details.get("team")

@@ -42,7 +42,7 @@ class GameDetails(TestCase):
         self.assertEqual(x.status_code, 200)
 
     def test_get_game_date(self):
-        x = get_game_date(566063)
+        x = get_game_date(566063, 1)
         self.assertEqual(x, datetime(2019, 9, 15, 23, 5, tzinfo=tzlocal()))
 
     def test_get_venue_id(self):
