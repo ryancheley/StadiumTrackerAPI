@@ -35,11 +35,7 @@ class GamesViewList(ListView):
         return data
 
 
-class MyGamesViewList(LoginRequiredMixin, ListView):
-    model = GameDetails
-    context_object_name = "game_list"
-    template_name = "stadium_tracker/game_list.html"
-    paginate_by = PAGINATION_DEFAULT
+class MyGamesViewList(LoginRequiredMixin, GamesViewList):
 
     def get_queryset(self):
         user = self.request.user
