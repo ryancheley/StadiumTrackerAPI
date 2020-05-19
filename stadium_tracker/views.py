@@ -49,11 +49,7 @@ class MyGamesViewList(LoginRequiredMixin, GamesViewList):
         return data
 
 
-class StadiumGamesViewList(ListView):
-    model = GameDetails
-    context_object_name = "game_list"
-    template_name = "stadium_tracker/game_list.html"
-    paginate_by = PAGINATION_DEFAULT
+class StadiumGamesViewList(GamesViewList):
 
     def get_queryset(self):
         queryset = GameDetails.objects.filter(
@@ -74,17 +70,6 @@ class GameDetailView(DetailView):
     model = GameDetails
     context_object_name = "details"
     template_name = "stadium_tracker/gamedetails_view.html"
-
-
-class VenueList(ListView):
-    model = GameDetails
-    template_name = "stadium_tracker/venue_list.html"
-
-    def get(self, request, *args, **kwargs):
-        venues = GameDetails.get_venue_count(self)
-
-        context = {"venues": venues, "pages": {"header": "Visited Stadia"}}
-        return render(request, "stadium_tracker/venue_list.html", context)
 
 
 class GameDetailCreate(LoginRequiredMixin, CreateView):
@@ -131,6 +116,7 @@ class GameDetailCreate(LoginRequiredMixin, CreateView):
             "pages": {"header": "Add a Game"},
             "default_values": default_values,
             "leagues": leagues,
+            'request': request,
         }
         return render(request, "stadium_tracker/gamedetails_form.html", context)
 
@@ -172,8 +158,12 @@ class GameDetailDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return obj.user == self.request.user
 
 
-class MyVenues(LoginRequiredMixin, ListView):
+class VenueList(ListView):
     model = GameDetails
+    template_name = "stadium_tracker/venue_list.html"
+
+
+class MyVenues(LoginRequiredMixin, VenueList):
     context_object_name = "venues"
     template_name = "stadium_tracker/my_venue_list.html"
 

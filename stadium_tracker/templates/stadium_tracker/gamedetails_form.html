@@ -12,6 +12,10 @@
         {{ error | safe }}
     </strong>
     </p>
+    {% for key, value in request.GET.items %}
+        {{key}}
+        {{value}}
+    {% endfor %}
     {% if not games %}
         <!--
     <form method="get" class="mui-form" name="league">
