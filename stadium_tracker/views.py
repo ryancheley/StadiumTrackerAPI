@@ -14,9 +14,9 @@ from stadium_tracker.game_details import (
     get_default_game,
 )
 from stadium_tracker.venue_details import get_venue_details, get_venue_list
-from stadium_tracker.league_details import get_division_details, get_leagues
+from stadium_tracker.league_details import get_division_details
 
-from stadium_tracker.models import GameDetails
+from stadium_tracker.models import GameDetails, Leagues
 from stadium_tracker.forms import GameDetailsForm
 
 PAGINATION_DEFAULT = 5
@@ -80,7 +80,7 @@ class GameDetailCreate(LoginRequiredMixin, CreateView):
 
     def get(self, request, *args, **kwargs):
         form = GameDetailsForm()
-        leagues = get_leagues()
+        leagues = Leagues.objects.all().order_by('mlb_api_league_id')
         teams = get_teams(1)
         display_dates = get_form_details(request)
         default_values = get_default_game(1)
