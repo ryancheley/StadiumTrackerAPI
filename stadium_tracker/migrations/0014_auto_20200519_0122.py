@@ -1,11 +1,11 @@
 from django.db import migrations
 from stadium_tracker.league_details import get_leagues
-from stadium_tracker.models import Leagues
+from stadium_tracker.models import League
 
 
 def load_leagues(apps, schema_editor):
     for league in get_leagues():
-        Leagues(mlb_api_league_id=league['id'],
+        League(mlb_api_league_id=league['id'],
                 league_name=league['name'],
                 ).save()
 

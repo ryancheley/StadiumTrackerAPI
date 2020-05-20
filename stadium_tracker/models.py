@@ -58,3 +58,22 @@ class Leagues(models.Model):
 
     def __str__(self):
         return self.league_name
+
+
+class League(models.Model):
+    mlb_api_league_id = models.IntegerField()
+    league_name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.league_name
+
+
+class Division(models.Model):
+    mlb_api_division_id = models.IntegerField()
+    division_name = models.CharField(max_length=255)
+    mlb_api_league_id = models.IntegerField()
+    mlb_api_sport_id = models.ForeignKey('League', on_delete=models.CASCADE)
+    has_wildcard = models.BooleanField()
+
+    def __str__(self):
+        return self.division_name
