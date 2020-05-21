@@ -14,9 +14,8 @@ from stadium_tracker.game_details import (
     get_default_game,
 )
 from stadium_tracker.venue_details import get_venue_details, get_venue_list
-from stadium_tracker.league_details import get_division_details
 
-from stadium_tracker.models import GameDetails, League
+from stadium_tracker.models import GameDetails, League, Division
 from stadium_tracker.forms import GameDetailsForm
 
 PAGINATION_DEFAULT = 5
@@ -171,10 +170,10 @@ class MyVenues(LoginRequiredMixin, VenueList):
         data = super().get_context_data(**kwargs)
         user = self.request.user
         division_teams = []
-        data["divisions"] = get_division_details(1, user)
+        data["divisions"] = Division.objects.filter(mlb_api_sport_id=1)
         venues_count = GameDetails.get_venue_count(self)
         for d in data["divisions"]:
-            venues = get_venue_list(1, d.get("division_id"))
+            venues = get_venue_list(1, d.mlb_api_division_id)
             if self.request.user.is_authenticated:
                 for v in venues:
                     venue_id = v.get("venue_id")
@@ -186,7 +185,7 @@ class MyVenues(LoginRequiredMixin, VenueList):
                             v.update(user_visited=True)
             division_teams.append(
                 {
-                    "division_id": d.get("division_id"),
+                    "division_id": d.mlb_api_division_id,
                     "venues": venues,
                     "test": venues_count,
                 }

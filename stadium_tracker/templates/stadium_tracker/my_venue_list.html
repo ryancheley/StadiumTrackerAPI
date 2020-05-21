@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load stadium_tracker_extras %}
 
 {% block content %}
     <h1 class="mui--text-display1">
@@ -12,14 +13,14 @@
     </h1>
 <ul class="mui-tabs__bar mui-tabs__bar--justified">
     {% for d in divisions %}
-        <li class="{% if d.default_division %} mui--is-active {% endif %}">
-        <a data-mui-toggle="tab" data-mui-controls="pane-events-{{ d.division_id }}">{{d.division_name}}</a></li>
+        <li class="{% if d.mlb_api_division_id == 203 %} mui--is-active {% endif %}">
+        <a data-mui-toggle="tab" data-mui-controls="pane-events-{{ d.mlb_api_division_id }}">{{d.division_name|short_name}}</a></li>
     {% endfor %}
 </ul>
 
 {% for d in divisions %}
-    <div class="{% if d.default_division %} mui-tabs__pane mui--is-active {% else %} mui-tabs__pane {% endif %}"
-         id="pane-events-{{d.division_id}}">
+    <div class="{% if d.mlb_api_division_id == 203 %} mui-tabs__pane mui--is-active {% else %} mui-tabs__pane {% endif %}"
+         id="pane-events-{{d.mlb_api_division_id}}">
 <div class="mui-row">
     <div class="mui-col-md-3 mui--text-title">Stadium</div>
     <div class="mui-col-md-2 mui--text-title">Home Team</div>
@@ -28,7 +29,7 @@
     {% endif %}
 </div>
     {% for t in teams %}
-    {% if d.division_id == t.division_id %}
+    {% if d.mlb_api_division_id == t.division_id %}
         {% for v in t.venues %}
         <div class="mui-row">
             <div class="mui-col-md-3">
