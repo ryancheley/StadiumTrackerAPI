@@ -80,5 +80,22 @@ class Venue(models.Model):
         return self.venue_name
 
 
-# class Team(models.Model):
-#     pass
+class Team(models.Model):
+    mlb_api_team_id = models.IntegerField()
+    name = models.CharField(max_length=255)
+    venue = models.ForeignKey('Venue', on_delete=models.CASCADE)
+    team_code = models.CharField(max_length=255)
+    file_code = models.CharField(max_length=255)
+    abbreviation = models.CharField(max_length=255)
+    team_name = models.CharField(max_length=255)
+    location_name = models.CharField(max_length=255)
+    first_year_of_play = models.IntegerField()
+    # league = ?
+    division = models.ForeignKey('Division', on_delete=models.CASCADE)
+    sport = models.ForeignKey('League', on_delete=models.CASCADE)
+    short_name = models.CharField(max_length=255)
+    parent_organization_id = models.ForeignKey('self', on_delete=models.CASCADE)
+    all_star_status = models.BooleanField()
+    active = models.BooleanField()
+    spring_league = models.ForeignKey('League', on_delete=models.CASCADE, related_name='spring_league')
+    # conference = ?
