@@ -52,14 +52,6 @@ class GameDetails(models.Model):
         ordering = ["user", "-game_datetime"]
 
 
-class Leagues(models.Model):
-    mlb_api_league_id = models.IntegerField()
-    league_name = models.CharField(max_length=255)
-
-    def __str__(self):
-        return self.league_name
-
-
 class League(models.Model):
     mlb_api_league_id = models.IntegerField()
     league_name = models.CharField(max_length=255)
