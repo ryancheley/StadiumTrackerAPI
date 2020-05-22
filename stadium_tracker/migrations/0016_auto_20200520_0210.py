@@ -11,14 +11,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.CreateModel(
-            name='League',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('mlb_api_league_id', models.IntegerField()),
-                ('league_name', models.CharField(max_length=255)),
-            ],
-        ),
         migrations.AlterField(
             model_name='division',
             name='mlb_api_league_id',

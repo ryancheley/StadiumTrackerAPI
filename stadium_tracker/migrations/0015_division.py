@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
                 ('division_name', models.CharField(max_length=255)),
                 ('mlb_api_sport_id', models.IntegerField()),
                 ('has_wildcard', models.BooleanField()),
-                ('mlb_api_league_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='stadium_tracker.Leagues')),
+                ('mlb_api_league_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='stadium_tracker.League')),
             ],
         ),
     ]

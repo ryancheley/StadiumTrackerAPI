@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name='leagues',
+            model_name='league',
             name='mlb_api_league_id',
             field=models.IntegerField(default=1),
             preserve_default=False,
