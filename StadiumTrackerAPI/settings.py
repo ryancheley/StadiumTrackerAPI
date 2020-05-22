@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     "stadium_tracker.apps.StadiumTrackerConfig",
     "content.apps.ContentConfig",
     "api.apps.ApiConfig",
+    "baseball.apps.BaseballConfig",
 ]
 
 SITE_ID = 1
