@@ -69,3 +69,16 @@ class Division(models.Model):
 
     def __str__(self):
         return self.division_name
+
+
+class Venue(models.Model):
+    mlb_api_venue_id = models.IntegerField()
+    venue_name = models.CharField(max_length=255)
+    # ToDo: add address information
+
+    def __str__(self):
+        return self.venue_name
+
+
+# class Team(models.Model):
+#     pass
