@@ -3,7 +3,6 @@ from django.views.generic.edit import DeleteView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from django.shortcuts import render
-from django.db.models import Count
 from django.db import IntegrityError
 from stadium_tracker.game_details import (
     get_game_date,
@@ -14,10 +13,9 @@ from stadium_tracker.game_details import (
     get_form_details,
     get_default_game,
 )
-from stadium_tracker.venue_details import get_venue_details
 
 from stadium_tracker.models import GameDetails
-from baseball.models import League, Division, Sport, Team
+from baseball.models import League, Division, Sport, Team, Venue
 from stadium_tracker.forms import GameDetailsForm
 
 PAGINATION_DEFAULT = 5
@@ -40,7 +38,7 @@ class MyGamesViewList(LoginRequiredMixin, GamesViewList):
 
     def get_queryset(self):
         user = self.request.user
-        queryset = GameDetails.objects.filter(user_id=user)
+        queryset = super().queryset.filter(user_id=user)
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -53,14 +51,13 @@ class MyGamesViewList(LoginRequiredMixin, GamesViewList):
 class StadiumGamesViewList(GamesViewList):
 
     def get_queryset(self):
-        queryset = GameDetails.objects.filter(
+        queryset = super().queryset.filter(
             venue_id=self.kwargs["venue_id"]
         ).order_by("-game_datetime")
         return queryset
 
     def get_context_data(self, **kwargs):
-        venue_id = self.kwargs["venue_id"]
-        venue = get_venue_details(venue_id)
+        venue = Venue.objects.filter(mlb_api_venue_id=self.kwargs["venue_id"]).first().name
         data = super().get_context_data(**kwargs)
         data["venue"] = venue
         data["pages"] = {"header": f"List of Games for {venue}"}
