@@ -1,5 +1,4 @@
 from django.db import models
-from django.db.models import Count
 from StadiumTrackerAPI import settings
 from django.utils import timezone
 
@@ -29,24 +28,12 @@ class GameDetails(models.Model):
     modify_date = models.DateTimeField(auto_now_add=True)
     view_type = models.CharField(max_length=1, choices=VIEWING_OPTIONS, default='P')
 
-    # def __str__(self):
-    #     return f'{self.home_team} vs {self.away_team} ({self.game_datetime.strftime("%m/%d/%Y")})'
+    def __str__(self):
+        return f'{self.home_team} vs {self.away_team} ({self.game_datetime.strftime("%m/%d/%Y")})'
 
     def save(self, *args, **kwargs):
         self.modify_date = timezone.now()
         super(GameDetails, self).save(*args, **kwargs)
-
-    def get_venue_count(self):
-        game_venue = []
-        details = (
-            GameDetails.objects.all()
-            .values("stadium")
-            .annotate(total=Count("stadium"))
-            .order_by("-total")
-        )
-        for d in details:
-            game_venue.append({"stadium": d.get("stadium"), "total": d.get("total")})
-        return game_venue
 
     class Meta:
         unique_together = ["user", "game_id"]

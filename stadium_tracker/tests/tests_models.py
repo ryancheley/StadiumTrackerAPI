@@ -34,11 +34,6 @@ class GameDetailsTest(TestCase):
         game = GameDetails.objects.get(game_id=1)
         self.assertEqual(game.home_runs, 1)
 
-    def test_get_venue_count(self):
-        game_count = GameDetails.get_venue_count(self)
-        self.assertEqual(game_count[0].get("total"), 1)
-        self.assertEqual(game_count[0].get("venue_id"), 1)
-
     def test_game_user_combination_is_unique(self):
         g = GameDetails.objects.get(game_id=1)
         unique_together = g._meta.unique_together

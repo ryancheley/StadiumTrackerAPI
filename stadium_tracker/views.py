@@ -14,7 +14,7 @@ from stadium_tracker.game_details import (
     get_form_details,
     get_default_game,
 )
-from stadium_tracker.venue_details import get_venue_details, get_venue_list
+from stadium_tracker.venue_details import get_venue_details
 
 from stadium_tracker.models import GameDetails
 from baseball.models import League, Division, Sport, Team
@@ -166,8 +166,10 @@ class VenueList(ListView):
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
+        data["default_division"] = 203
         data["divisions"] = Division.objects.filter(sport_id=Sport.objects.filter(name='Major League Baseball').first()).order_by('name')
         data["teams"] = Team.objects.filter(sport_id=Sport.objects.filter(name='Major League Baseball').first())
+        data["stadium"] = GameDetails.objects.order_by().values_list('stadium', flat=True).distinct()
         return data
 
 
@@ -178,5 +180,5 @@ class MyVenues(LoginRequiredMixin, VenueList):
         data = super().get_context_data(**kwargs)
         data["default_division"] = 203
         data["pages"] = {"header": "My Visited Stadia"}
-        data["stadium"] = GameDetails.objects.order_by().values_list('stadium', flat=True).distinct().filter(user=1)
+        data["stadium"] = data['stadium'].filter(user=1)
         return data

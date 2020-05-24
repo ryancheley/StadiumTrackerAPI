@@ -1,28 +1,63 @@
 {% extends 'base.html' %}
+{% load stadium_tracker_extras %}
 
 {% block content %}
-
     <h1 class="mui--text-display1">
     {% block title %}
+        {% if user.is_authenticated %}
         {{ pages.header }}
+        {% else %}
+        Visited Stadia
+        {% endif %}
     {% endblock %}
     </h1>
-
-<table class="mui-table mui-table--bordered">
-    <thead>
-        <tr>
-            <th>Venue</th>
-            <th>Count</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for v in venues %}
-    <tr>
-        <td><a href="{% url 'stadium_tracker:stadium_game_list' v.venue_id %}">{{ v.name }}</a></td>
-        <td>{{ v.total }}</td>
-    </tr>
+<ul class="mui-tabs__bar mui-tabs__bar--justified">
+    {% for d in divisions %}
+        <li class="{% if d.mlb_api_division_id == default_division %} mui--is-active {% endif %}">
+        <a data-mui-toggle="tab" data-mui-controls="pane-events-{{ d.mlb_api_division_id }}">{{d.name_short}}</a></li>
     {% endfor %}
-    </tbody>
+</ul>
+    {% for d in divisions %}
+    <div class="{% if default_division == d.mlb_api_division_id %} mui-tabs__pane mui--is-active {% else %} mui-tabs__pane {% endif %}"
+         id="pane-events-{{ d.mlb_api_division_id }}">
+        <div class="mui-row">
+            <div class="mui-col-md-3 mui--text-title">Home Team</div>
+            <div class="mui-col-md-3 mui--text-title">Stadium</div>
+            <div class="mui-col-md-1 mui--text-title">Visited</div>
+        </div>
+        {% for t in teams %}
+            {% if t.division_id_id == d.id %}
+            <div class="mui-row">
+            <div class="mui-col-md-3">{{ t }}</div>
+            <div class="mui-col-md-3">{{ t.venue_id }}</div>
+            <div class="mui-col-md-1">X</div>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% endfor %}
 
-</table>
+
+
+<script>
+  // get toggle elements
+  var toggleEls = document.querySelectorAll('[data-mui-controls^="pane-events-"]');
+
+  function logFn(ev) {
+    var s = '[' + ev.type + ']';
+    s += ' paneId: ' + ev.paneId;
+    s += ' relatedPaneId: ' + ev.relatedPaneId;
+    console.log(s);
+  }
+
+  // attach event handlers
+  for (var i=0; i < toggleEls.length; i++) {
+    toggleEls[i].addEventListener('mui.tabs.showstart', logFn);
+    toggleEls[i].addEventListener('mui.tabs.showend', logFn);
+    toggleEls[i].addEventListener('mui.tabs.hidestart', logFn);
+    toggleEls[i].addEventListener('mui.tabs.hideend', logFn);
+  }
+</script>
+
+
 {% endblock %}
