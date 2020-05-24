@@ -23,13 +23,14 @@ class GameDetails(models.Model):
     game_body = models.TextField(blank=True, null=True)
     game_id = models.IntegerField()
     venue_id = models.IntegerField()
+    stadium = models.ForeignKey('baseball.Venue', on_delete=models.CASCADE, blank=True, null=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     create_date = models.DateTimeField(auto_now_add=True)
     modify_date = models.DateTimeField(auto_now_add=True)
     view_type = models.CharField(max_length=1, choices=VIEWING_OPTIONS, default='P')
 
-    def __str__(self):
-        return f'{self.home_team} vs {self.away_team} ({self.game_datetime.strftime("%m/%d/%Y")})'
+    # def __str__(self):
+    #     return f'{self.home_team} vs {self.away_team} ({self.game_datetime.strftime("%m/%d/%Y")})'
 
     def save(self, *args, **kwargs):
         self.modify_date = timezone.now()
@@ -39,12 +40,12 @@ class GameDetails(models.Model):
         game_venue = []
         details = (
             GameDetails.objects.all()
-            .values("venue_id")
-            .annotate(total=Count("venue_id"))
+            .values("stadium")
+            .annotate(total=Count("stadium"))
             .order_by("-total")
         )
         for d in details:
-            game_venue.append({"venue_id": d.get("venue_id"), "total": d.get("total")})
+            game_venue.append({"stadium": d.get("stadium"), "total": d.get("total")})
         return game_venue
 
     class Meta:

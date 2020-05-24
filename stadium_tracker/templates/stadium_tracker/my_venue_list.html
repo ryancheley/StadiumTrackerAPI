@@ -13,53 +13,36 @@
     </h1>
 <ul class="mui-tabs__bar mui-tabs__bar--justified">
     {% for d in divisions %}
-        <li class="{% if d.mlb_api_division_id == 203 %} mui--is-active {% endif %}">
-        <a data-mui-toggle="tab" data-mui-controls="pane-events-{{ d.mlb_api_division_id }}">{{d.division_name|short_name}}</a></li>
+        <li class="{% if d.mlb_api_division_id == default_division %} mui--is-active {% endif %}">
+        <a data-mui-toggle="tab" data-mui-controls="pane-events-{{ d.mlb_api_division_id }}">{{d.name_short}}</a></li>
     {% endfor %}
 </ul>
-
-{% for d in divisions %}
-    <div class="{% if d.mlb_api_division_id == 203 %} mui-tabs__pane mui--is-active {% else %} mui-tabs__pane {% endif %}"
-         id="pane-events-{{d.mlb_api_division_id}}">
-<div class="mui-row">
-    <div class="mui-col-md-3 mui--text-title">Stadium</div>
-    <div class="mui-col-md-2 mui--text-title">Home Team</div>
-    {% if user.is_authenticated %}
-    <div class="mui-col-md-1 mui--text-title">Visited</div>
-    {% endif %}
-</div>
-    {% for t in teams %}
-    {% if d.mlb_api_division_id == t.division_id %}
-        {% for v in t.venues %}
+    {% for d in divisions %}
+    <div class="{% if default_division == d.mlb_api_division_id %} mui-tabs__pane mui--is-active {% else %} mui-tabs__pane {% endif %}"
+         id="pane-events-{{ d.mlb_api_division_id }}">
         <div class="mui-row">
-            <div class="mui-col-md-3">
-                <span>
-                    <a href="{% url 'stadium_tracker:stadium_game_list' v.venue_id %}">
-                    {{ v.venue_name }}
-                    </a>
-                </span>
-                <span class="mui--divider-left mui--text-right">&nbsp;{{v.visit_count}}</span>
-            </div>
-            <div class="mui-col-md-3">
-                {{ v.team_name }}
-            </div>
-            <div class="mui-col-md-1 mui--text-center">
-                {% if user.is_authenticated %}
-                    {% if v.user_visited %}
-                    <i class="fas fa-check"></i>
-                    {% else %}
-                    <i class="fas fa-times-circle"></i>
-                    {% endif %}
-                {% endif %}
-            </div>
+            <div class="mui-col-md-3 mui--text-title">Home Team</div>
+            <div class="mui-col-md-3 mui--text-title">Stadium</div>
+            <div class="mui-col-md-1 mui--text-title">Visited</div>
         </div>
+        {% for t in teams %}
+            {% if t.division_id_id == d.id %}
+            <div class="mui-row">
+            <div class="mui-col-md-3">{{ t }}</div>
+            <div class="mui-col-md-3">{{ t.venue_id }}</div>
+            <div class="mui-col-md-1">
+                {% for s in stadium %}
+                    {% if s == t.venue_id_id %}
+                        <i class="fas fa-check"></i>
+                    {% endif %}
+                {% endfor %}
+                </div>
+            </div>
+            {% endif %}
         {% endfor %}
-    {% endif %}
-    {% endfor %}
     </div>
-{% endfor %}
+    {% endfor %}
 
-</div>
 
 
 <script>

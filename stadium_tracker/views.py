@@ -3,6 +3,7 @@ from django.views.generic.edit import DeleteView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from django.shortcuts import render
+from django.db.models import Count
 from django.db import IntegrityError
 from stadium_tracker.game_details import (
     get_game_date,
@@ -15,7 +16,8 @@ from stadium_tracker.game_details import (
 )
 from stadium_tracker.venue_details import get_venue_details, get_venue_list
 
-from stadium_tracker.models import GameDetails, League, Division
+from stadium_tracker.models import GameDetails
+from baseball.models import League, Division, Sport, Team
 from stadium_tracker.forms import GameDetailsForm
 
 PAGINATION_DEFAULT = 5
@@ -159,37 +161,22 @@ class GameDetailDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 class VenueList(ListView):
     model = GameDetails
+    context_object_name = 'games'
     template_name = "stadium_tracker/venue_list.html"
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data["divisions"] = Division.objects.filter(sport_id=Sport.objects.filter(name='Major League Baseball').first()).order_by('name')
+        data["teams"] = Team.objects.filter(sport_id=Sport.objects.filter(name='Major League Baseball').first())
+        return data
 
 
 class MyVenues(LoginRequiredMixin, VenueList):
-    context_object_name = "venues"
     template_name = "stadium_tracker/my_venue_list.html"
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
-        user = self.request.user
-        division_teams = []
-        data["divisions"] = Division.objects.filter(mlb_api_sport_id=1)
-        venues_count = GameDetails.get_venue_count(self)
-        for d in data["divisions"]:
-            venues = get_venue_list(1, d.mlb_api_division_id)
-            if self.request.user.is_authenticated:
-                for v in venues:
-                    venue_id = v.get("venue_id")
-                    user_visited_venue = GameDetails.objects.filter(user=user).filter(
-                        venue_id=venue_id
-                    ).filter(view_type='P')
-                    if user_visited_venue:
-                        if venue_id == user_visited_venue[0].venue_id:
-                            v.update(user_visited=True)
-            division_teams.append(
-                {
-                    "division_id": d.mlb_api_division_id,
-                    "venues": venues,
-                    "test": venues_count,
-                }
-            )
-        data["teams"] = division_teams
+        data["default_division"] = 203
         data["pages"] = {"header": "My Visited Stadia"}
+        data["stadium"] = GameDetails.objects.order_by().values_list('stadium', flat=True).distinct().filter(user=1)
         return data
