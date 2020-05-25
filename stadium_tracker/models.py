@@ -1,6 +1,7 @@
 from django.db import models
 from StadiumTrackerAPI import settings
 from django.utils import timezone
+from django.urls import reverse
 
 
 class GameDetails(models.Model):
@@ -34,6 +35,9 @@ class GameDetails(models.Model):
     def save(self, *args, **kwargs):
         self.modify_date = timezone.now()
         super(GameDetails, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('stadium_tracker:gamedetails_list', kwargs={'pk': self.pk})
 
     class Meta:
         unique_together = ["user", "game_id"]

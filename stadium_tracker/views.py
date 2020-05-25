@@ -4,6 +4,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from django.shortcuts import render
 from django.db import IntegrityError
+from stadium_tracker.models import GameDetails
+from baseball.models import Division, Sport, Team, Venue, League
+from stadium_tracker.forms import GameDetailsForm
 from stadium_tracker.game_details import (
     get_game_date,
     get_boxscore,
@@ -13,10 +16,6 @@ from stadium_tracker.game_details import (
     get_form_details,
     get_default_game,
 )
-
-from stadium_tracker.models import GameDetails
-from baseball.models import League, Division, Sport, Team, Venue
-from stadium_tracker.forms import GameDetailsForm
 
 PAGINATION_DEFAULT = 5
 
@@ -144,7 +143,6 @@ class GameDetailCreate(LoginRequiredMixin, CreateView):
             return render(
                 self.request, "stadium_tracker/gamedetails_form.html", context=context
             )
-
 
 class GameDetailDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = GameDetails
