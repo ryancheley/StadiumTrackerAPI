@@ -74,7 +74,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='league',
             name='abbreviation',
-            field=models.CharField(blank=True, max_length=3, null=True),
+            field=models.CharField(blank=True, max_length=5, null=True),
         ),
         migrations.AddField(
             model_name='league',
