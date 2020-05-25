@@ -154,7 +154,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='team',
             name='short_name',
-            field=models.CharField(blank=True, max_length=24, null=True),
+            field=models.CharField(blank=True, max_length=32, null=True),
         ),
         migrations.AddField(
             model_name='team',
