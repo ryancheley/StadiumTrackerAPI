@@ -84,7 +84,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='league',
             name='name',
-            field=models.CharField(blank=True, max_length=33, null=True),
+            field=models.CharField(blank=True, max_length=45, null=True),
         ),
         migrations.AddField(
             model_name='league',

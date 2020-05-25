@@ -16,7 +16,7 @@ class Sport(models.Model):
 class League(models.Model):
     # http://statsapi.mlb.com/api/v1/league
     mlb_api_league_id = models.IntegerField(null=True, blank=True)
-    name = models.CharField(max_length=33, null=True, blank=True)
+    name = models.CharField(max_length=45, null=True, blank=True)
     abbreviation = models.CharField(max_length=3, null=True, blank=True, default='None')
     name_short = models.CharField(max_length=16, null=True, blank=True)
     sport_id = models.ForeignKey('Sport', on_delete=models.CASCADE, null=True, blank=True)
