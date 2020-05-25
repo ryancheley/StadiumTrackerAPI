@@ -82,7 +82,7 @@ class TeamHistory(models.Model):
 class Venue(models.Model):
     # http://statsapi.mlb.com/api/v1/venues
     mlb_api_venue_id = models.IntegerField(null=True, blank=True)
-    name = models.CharField(max_length=23, null=True, blank=True)
+    name = models.CharField(max_length=42, null=True, blank=True)
 
     def __str__(self):
         return self.name

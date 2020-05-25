@@ -184,6 +184,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='venue',
             name='name',
-            field=models.CharField(blank=True, max_length=23, null=True),
+            field=models.CharField(blank=True, max_length=42, null=True),
         ),
     ]
