@@ -19,18 +19,11 @@ def load_sports(apps, schema_editor):
 def load_leagues(apps, schema_editor):
     leagues = requests.get('http://statsapi.mlb.com/api/v1/league').json()['leagues']
     for l in leagues:
-        try:
-            League(mlb_api_league_id=l['id'], name=l['name'], abbreviation=l['abbreviation'],
-                   name_short=l['nameShort'],
-                   sport_id=Sport.objects.filter(mlb_api_sports_id=l['sport']['id'])[0],
-                   sort_order=l['sortOrder'],
-                   number_of_teams=l['numTeams']).save()
-        except KeyError:
-            League(mlb_api_league_id=l['id'], name=l['name'], abbreviation=l['abbreviation'],
-                   name_short='None',
-                   sport_id=Sport.objects.filter(mlb_api_sports_id=l['sport']['id'])[0],
-                   sort_order=l['sortOrder'],
-                   number_of_teams=0).save()
+        League(mlb_api_league_id=l['id'], name=l['name'], abbreviation=l['abbreviation'],
+               name_short=l.get('nameShort'),
+               sport_id=Sport.objects.filter(mlb_api_sports_id=l['sport']['id'])[0],
+               sort_order=l['sortOrder'],
+               number_of_teams=l.get('numTeams')).save()
 
 
 def load_conferences(apps, schema_editor):
