@@ -30,9 +30,9 @@ class League(models.Model):
 class Conferences(models.Model):
     # http://statsapi.mlb.com/api/v1/conferences
     mlb_api_conference_id = models.IntegerField(null=True, blank=True)
-    name = models.CharField(max_length=22, null=True, blank=True)
+    name = models.CharField(max_length=23, null=True, blank=True)
     abbreviation = models.CharField(max_length=4, null=True, blank=True)
-    name_short = models.CharField(max_length=11, null=True, blank=True)
+    name_short = models.CharField(max_length=12, null=True, blank=True)
     sport_id = models.ForeignKey('Sport', on_delete=models.CASCADE, null=True, blank=True)
     league_id = models.ForeignKey('League', on_delete=models.CASCADE, null=True, blank=True)
 
@@ -43,9 +43,9 @@ class Conferences(models.Model):
 class Division(models.Model):
     # http://statsapi.mlb.com/api/v1/divisions
     mlb_api_division_id = models.IntegerField(null=True, blank=True)
-    name = models.CharField(max_length=15, null=True, blank=True)
+    name = models.CharField(max_length=38, null=True, blank=True)
     abbreviation = models.CharField(max_length=6, null=True, blank=True)
-    name_short = models.CharField(max_length=15, null=True, blank=True)
+    name_short = models.CharField(max_length=20, null=True, blank=True)
     sport_id = models.ForeignKey('Sport', on_delete=models.CASCADE, null=True, blank=True)
     league_id =  models.ForeignKey('League', on_delete=models.CASCADE, null=True, blank=True)
 
@@ -56,14 +56,14 @@ class Division(models.Model):
 class Team(models.Model):
     # http://statsapi.mlb.com/api/v1/teams
     mlb_api_team_id = models.IntegerField(null=True, blank=True)
-    name = models.CharField(max_length=15, null=True, blank=True)
+    name = models.CharField(max_length=42, null=True, blank=True)
     venue_id = models.ForeignKey('Venue', on_delete=models.CASCADE, null=True, blank=True)
     team_code = models.CharField(max_length=3, null=True, blank=True)
-    file_code = models.CharField(max_length=3, null=True, blank=True)
-    abbreviation = models.CharField(max_length=3, null=True, blank=True)
-    team_name = models.CharField(max_length=14, null=True, blank=True)
-    location_name = models.CharField(max_length=7, null=True, blank=True)
-    short_name = models.CharField(max_length=5, null=True, blank=True)
+    file_code = models.CharField(max_length=5, null=True, blank=True)
+    abbreviation = models.CharField(max_length=8, null=True, blank=True)
+    team_name = models.CharField(max_length=20, null=True, blank=True)
+    location_name = models.CharField(max_length=24, null=True, blank=True)
+    short_name = models.CharField(max_length=32, null=True, blank=True)
     parent_organization_id = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
     first_year_of_play = models.IntegerField(null=True, blank=True)
     sport_id = models.ForeignKey('Sport', on_delete=models.CASCADE, null=True, blank=True)

@@ -29,12 +29,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='conferences',
             name='name',
-            field=models.CharField(blank=True, max_length=22, null=True),
+            field=models.CharField(blank=True, max_length=23, null=True),
         ),
         migrations.AddField(
             model_name='conferences',
             name='name_short',
-            field=models.CharField(blank=True, max_length=11, null=True),
+            field=models.CharField(blank=True, max_length=12, null=True),
         ),
         migrations.AddField(
             model_name='conferences',
@@ -59,12 +59,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='division',
             name='name',
-            field=models.CharField(blank=True, max_length=15, null=True),
+            field=models.CharField(blank=True, max_length=38, null=True),
         ),
         migrations.AddField(
             model_name='division',
             name='name_short',
-            field=models.CharField(blank=True, max_length=15, null=True),
+            field=models.CharField(blank=True, max_length=20, null=True),
         ),
         migrations.AddField(
             model_name='division',
@@ -109,7 +109,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='team',
             name='abbreviation',
-            field=models.CharField(blank=True, max_length=3, null=True),
+            field=models.CharField(blank=True, max_length=8, null=True),
         ),
         migrations.AddField(
             model_name='team',
@@ -119,7 +119,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='team',
             name='file_code',
-            field=models.CharField(blank=True, max_length=3, null=True),
+            field=models.CharField(blank=True, max_length=5, null=True),
         ),
         migrations.AddField(
             model_name='team',
@@ -134,7 +134,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='team',
             name='location_name',
-            field=models.CharField(blank=True, max_length=7, null=True),
+            field=models.CharField(blank=True, max_length=24, null=True),
         ),
         migrations.AddField(
             model_name='team',
@@ -144,7 +144,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='team',
             name='name',
-            field=models.CharField(blank=True, max_length=15, null=True),
+            field=models.CharField(blank=True, max_length=42, null=True),
         ),
         migrations.AddField(
             model_name='team',
@@ -154,7 +154,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='team',
             name='short_name',
-            field=models.CharField(blank=True, max_length=5, null=True),
+            field=models.CharField(blank=True, max_length=24, null=True),
         ),
         migrations.AddField(
             model_name='team',
@@ -169,7 +169,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='team',
             name='team_name',
-            field=models.CharField(blank=True, max_length=14, null=True),
+            field=models.CharField(blank=True, max_length=20, null=True),
         ),
         migrations.AddField(
             model_name='team',
