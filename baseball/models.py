@@ -18,7 +18,7 @@ class League(models.Model):
     mlb_api_league_id = models.IntegerField(null=True, blank=True)
     name = models.CharField(max_length=45, null=True, blank=True)
     abbreviation = models.CharField(max_length=5, null=True, blank=True, default='None')
-    name_short = models.CharField(max_length=16, null=True, blank=True)
+    name_short = models.CharField(max_length=45, null=True, blank=True)
     sport_id = models.ForeignKey('Sport', on_delete=models.CASCADE, null=True, blank=True)
     sort_order = models.IntegerField(null=True, blank=True)
     number_of_teams = models.IntegerField(null=True, blank=True, default=0)
