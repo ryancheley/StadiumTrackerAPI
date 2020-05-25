@@ -7,7 +7,6 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('baseball', '0004_auto_20200523_2359'),
         ('stadium_tracker', '0024_gamedetails_stadium'),
     ]
 
