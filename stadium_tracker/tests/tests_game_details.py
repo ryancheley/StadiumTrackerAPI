@@ -89,9 +89,9 @@ class GameDetails(TestCase):
         self.assertIsNone(x)
 
     def test_get_score_home(self):
-        x =  get_score(1, 8060, 'home')
+        x = get_score(1, 8060, 'home')
         self.assertEqual(2, x)
 
     def test_get_score_away(self):
-        x =  get_score(1, 8060, 'away')
+        x = get_score(1, 8060, 'away')
         self.assertEqual(1, x)

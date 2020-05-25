@@ -144,6 +144,7 @@ class GameDetailCreate(LoginRequiredMixin, CreateView):
                 self.request, "stadium_tracker/gamedetails_form.html", context=context
             )
 
+
 class GameDetailDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = GameDetails
     context_object_name = "game_details"
@@ -162,7 +163,8 @@ class VenueList(ListView):
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
         data["default_division"] = 203
-        data["divisions"] = Division.objects.filter(sport_id=Sport.objects.filter(name='Major League Baseball').first()).order_by('name')
+        data["divisions"] = Division.objects.filter(sport_id=Sport.objects
+                                                    .filter(name='Major League Baseball').first()).order_by('name')
         data["teams"] = Team.objects.filter(sport_id=Sport.objects.filter(name='Major League Baseball').first())
         data["stadium"] = GameDetails.objects.order_by().values_list('stadium', flat=True).distinct()
         return data

@@ -7,5 +7,3 @@ class TestVenueDetails(TestCase):
     def test_get_venue_details(self):
         x = get_venue_details(22)
         self.assertEqual(x, "Dodger Stadium")
-
-
