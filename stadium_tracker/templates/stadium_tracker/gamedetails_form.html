@@ -12,22 +12,26 @@
         {{ error | safe }}
     </strong>
     </p>
+    {% for key, value in request.GET.items %}
+        {{key}}
+        {{value}}
+    {% endfor %}
     {% if not games %}
-        <!--
+<!--
     <form method="get" class="mui-form" name="league">
         <select name="league">
         {% for l in leagues %}
-            {% if l.id == 1 %}
-            <option selected value="{{l.id}}">{{l.name}}</option>
+            {% if l.mlb_api_league_id == 1 %}
+            <option selected value="{{l.mlb_api_league_id}}">{{l.league_name}}</option>
             {% else %}
-            <option value="{{l.id}}">{{l.name}}</option>
+            <option value="{{l.mlb_api_league_id}}">{{l.league_name}}</option>
             {% endif %}
         {% endfor %}
         </select>
             <br>
     <input type="submit" value="submit" class="mui-btn mui-btn--primary">
     </form>
-    -->
+-->
     <form method="get" class="mui-form">
     <legend>Choose Teams and a Date</legend>
         <div class="mui-select">

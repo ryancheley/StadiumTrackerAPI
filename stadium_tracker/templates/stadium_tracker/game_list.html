@@ -4,9 +4,7 @@
 {% block content %}
 
     <h1>
-    {% block title %}
-        {{ pages.header }}
-    {% endblock %}
+    {% block title %}{{ pages.header }}{% endblock %}
     </h1>
 
 <table class="mui-table mui-table--bordered">
@@ -58,8 +56,6 @@
 
     </tbody>
 </table>
-
-    <div class="mui-container">
     {% if request.user.is_authenticated %}
         {% if venue %}
         <a class="mui-btn mui-btn--primary" href="{% url "stadium_tracker:venue_list" %}">Go Back</a>
@@ -69,28 +65,27 @@
     {% else %}
         <a class="mui-btn mui-btn--primary" href="/accounts/login/">Log into add a game seen</a>
     {% endif %}
-    </div>
-    <div class="">
-{% if is_paginated %}
-  <ul class="mui-list--inline mui--text-body2">
-    {% if page_obj.has_previous %}
-      <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
-    {% else %}
-      <li class="disabled"><span>&laquo;</span></li>
+
+    {% if is_paginated %}
+      <ul class="mui-list--inline mui--text-body2">
+        {% if page_obj.has_previous %}
+          <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+        {% else %}
+          <li class="disabled"><span>&laquo;</span></li>
+        {% endif %}
+        {% for i in paginator.page_range %}
+          {% if page_obj.number == i %}
+            <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+          {% else %}
+            <li><a href="?page={{ i }}">{{ i }}</a></li>
+          {% endif %}
+        {% endfor %}
+        {% if page_obj.has_next %}
+          <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+        {% else %}
+          <li class="disabled"><span>&raquo;</span></li>
+        {% endif %}
+      </ul>
     {% endif %}
-    {% for i in paginator.page_range %}
-      {% if page_obj.number == i %}
-        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
-      {% else %}
-        <li><a href="?page={{ i }}">{{ i }}</a></li>
-      {% endif %}
-    {% endfor %}
-    {% if page_obj.has_next %}
-      <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
-    {% else %}
-      <li class="disabled"><span>&raquo;</span></li>
-    {% endif %}
-  </ul>
-{% endif %}    </div>
 
 {% endblock %}

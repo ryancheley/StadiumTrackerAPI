@@ -4,6 +4,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from django.shortcuts import render
 from django.db import IntegrityError
+from stadium_tracker.models import GameDetails
+from baseball.models import Division, Sport, Team, Venue, League
+from stadium_tracker.forms import GameDetailsForm
 from stadium_tracker.game_details import (
     get_game_date,
     get_boxscore,
@@ -13,11 +16,6 @@ from stadium_tracker.game_details import (
     get_form_details,
     get_default_game,
 )
-from stadium_tracker.venue_details import get_venue_details, get_venue_list
-from stadium_tracker.league_details import get_division_details, get_leagues
-
-from stadium_tracker.models import GameDetails
-from stadium_tracker.forms import GameDetailsForm
 
 PAGINATION_DEFAULT = 5
 
@@ -39,7 +37,7 @@ class MyGamesViewList(LoginRequiredMixin, GamesViewList):
 
     def get_queryset(self):
         user = self.request.user
-        queryset = GameDetails.objects.filter(user_id=user)
+        queryset = super().queryset.filter(user_id=user)
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -49,21 +47,16 @@ class MyGamesViewList(LoginRequiredMixin, GamesViewList):
         return data
 
 
-class StadiumGamesViewList(ListView):
-    model = GameDetails
-    context_object_name = "game_list"
-    template_name = "stadium_tracker/game_list.html"
-    paginate_by = PAGINATION_DEFAULT
+class StadiumGamesViewList(GamesViewList):
 
     def get_queryset(self):
-        queryset = GameDetails.objects.filter(
+        queryset = super().queryset.filter(
             venue_id=self.kwargs["venue_id"]
         ).order_by("-game_datetime")
         return queryset
 
     def get_context_data(self, **kwargs):
-        venue_id = self.kwargs["venue_id"]
-        venue = get_venue_details(venue_id)
+        venue = Venue.objects.filter(mlb_api_venue_id=self.kwargs["venue_id"]).first().name
         data = super().get_context_data(**kwargs)
         data["venue"] = venue
         data["pages"] = {"header": f"List of Games for {venue}"}
@@ -76,17 +69,6 @@ class GameDetailView(DetailView):
     template_name = "stadium_tracker/gamedetails_view.html"
 
 
-class VenueList(ListView):
-    model = GameDetails
-    template_name = "stadium_tracker/venue_list.html"
-
-    def get(self, request, *args, **kwargs):
-        venues = GameDetails.get_venue_count(self)
-
-        context = {"venues": venues, "pages": {"header": "Visited Stadia"}}
-        return render(request, "stadium_tracker/venue_list.html", context)
-
-
 class GameDetailCreate(LoginRequiredMixin, CreateView):
     model = GameDetails
     form_class = GameDetailsForm
@@ -95,7 +77,7 @@ class GameDetailCreate(LoginRequiredMixin, CreateView):
 
     def get(self, request, *args, **kwargs):
         form = GameDetailsForm()
-        leagues = get_leagues()
+        leagues = League.objects.all().order_by('mlb_api_league_id')
         teams = get_teams(1)
         display_dates = get_form_details(request)
         default_values = get_default_game(1)
@@ -131,6 +113,7 @@ class GameDetailCreate(LoginRequiredMixin, CreateView):
             "pages": {"header": "Add a Game"},
             "default_values": default_values,
             "leagues": leagues,
+            'request': request,
         }
         return render(request, "stadium_tracker/gamedetails_form.html", context)
 
@@ -161,7 +144,6 @@ class GameDetailCreate(LoginRequiredMixin, CreateView):
                 self.request, "stadium_tracker/gamedetails_form.html", context=context
             )
 
-
 class GameDetailDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = GameDetails
     context_object_name = "game_details"
@@ -172,35 +154,26 @@ class GameDetailDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return obj.user == self.request.user
 
 
-class MyVenues(LoginRequiredMixin, ListView):
+class VenueList(ListView):
     model = GameDetails
-    context_object_name = "venues"
+    context_object_name = 'games'
+    template_name = "stadium_tracker/venue_list.html"
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data["default_division"] = 203
+        data["divisions"] = Division.objects.filter(sport_id=Sport.objects.filter(name='Major League Baseball').first()).order_by('name')
+        data["teams"] = Team.objects.filter(sport_id=Sport.objects.filter(name='Major League Baseball').first())
+        data["stadium"] = GameDetails.objects.order_by().values_list('stadium', flat=True).distinct()
+        return data
+
+
+class MyVenues(LoginRequiredMixin, VenueList):
     template_name = "stadium_tracker/my_venue_list.html"
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
-        user = self.request.user
-        division_teams = []
-        data["divisions"] = get_division_details(1, user)
-        venues_count = GameDetails.get_venue_count(self)
-        for d in data["divisions"]:
-            venues = get_venue_list(1, d.get("division_id"))
-            if self.request.user.is_authenticated:
-                for v in venues:
-                    venue_id = v.get("venue_id")
-                    user_visited_venue = GameDetails.objects.filter(user=user).filter(
-                        venue_id=venue_id
-                    ).filter(view_type='P')
-                    if user_visited_venue:
-                        if venue_id == user_visited_venue[0].venue_id:
-                            v.update(user_visited=True)
-            division_teams.append(
-                {
-                    "division_id": d.get("division_id"),
-                    "venues": venues,
-                    "test": venues_count,
-                }
-            )
-        data["teams"] = division_teams
+        data["default_division"] = 203
         data["pages"] = {"header": "My Visited Stadia"}
+        data["stadium"] = data['stadium'].filter(user=1)
         return data

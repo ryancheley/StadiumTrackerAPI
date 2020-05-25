@@ -57,8 +57,7 @@
           <div class="mui-divider"></div>
           <div class="mui--container">
             <h3>  {{ details.game_headline }} </h3>
-
-        <p>{{ details.game_body | safe }}</p>
+            <p>{{ details.game_body | safe }}</p>
           </div>
         {% endif %}
     </div>
@@ -66,16 +65,14 @@
         {% endif %}
 
 
-  <div class="mui-container">
-    {% if request.user.is_authenticated %}
+    <div class="mui-container">
         <a class="mui-btn mui-btn--raised" href="{% url "stadium_tracker:my_game_list" %}">Go Back</a>
+    {% if request.user.is_authenticated %}
         {% if request.user == details.user %}
         <a class="mui-btn mui-btn--danger" href="{% url "stadium_tracker:gamesseen_delete" details.id %}">Delete</a>
         {% else %}
         <a class="mui-btn mui-btn--primary" href="{% url "stadium_tracker:gamedetails_create"%}">Add</a>
         {% endif %}
-    {% else %}
-    <a class="mui-btn mui-btn--raised" href="{% url "stadium_tracker:game_list" %}">Go Back</a>
     {% endif %}
   </div>
 
