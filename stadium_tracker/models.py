@@ -42,3 +42,40 @@ class GameDetails(models.Model):
     class Meta:
         unique_together = ["user", "game_id"]
         ordering = ["user", "-game_datetime"]
+
+
+class League(models.Model):
+    mlb_api_league_id = models.IntegerField()
+    league_name = models.CharField(max_length=255)
+
+
+class Division(models.Model):
+    mlb_api_division_id = models.IntegerField()
+    division_name = models.CharField(max_length=255)
+    mlb_api_league_id = models.IntegerField()
+    mlb_api_sport_id = models.ForeignKey('League', on_delete=models.CASCADE)
+    has_wildcard = models.BooleanField()
+
+
+class Venue(models.Model):
+    mlb_api_venue_id = models.IntegerField()
+    venue_name = models.CharField(max_length=255)
+
+
+class Team(models.Model):
+    mlb_api_team_id = models.IntegerField()
+    name = models.CharField(max_length=255)
+    venue = models.ForeignKey('Venue', on_delete=models.CASCADE)
+    team_code = models.CharField(max_length=255)
+    file_code = models.CharField(max_length=255)
+    abbreviation = models.CharField(max_length=255)
+    team_name = models.CharField(max_length=255)
+    location_name = models.CharField(max_length=255)
+    first_year_of_play = models.IntegerField()
+    division = models.ForeignKey('Division', on_delete=models.CASCADE)
+    sport = models.ForeignKey('League', on_delete=models.CASCADE)
+    short_name = models.CharField(max_length=255)
+    parent_organization_id = models.ForeignKey('self', on_delete=models.CASCADE)
+    all_star_status = models.BooleanField()
+    active = models.BooleanField()
+    spring_league = models.ForeignKey('League', on_delete=models.CASCADE, related_name='spring_league')
