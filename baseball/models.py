@@ -47,7 +47,7 @@ class Division(models.Model):
     abbreviation = models.CharField(max_length=6, null=True, blank=True)
     name_short = models.CharField(max_length=20, null=True, blank=True)
     sport_id = models.ForeignKey('Sport', on_delete=models.CASCADE, null=True, blank=True)
-    league_id =  models.ForeignKey('League', on_delete=models.CASCADE, null=True, blank=True)
+    league_id = models.ForeignKey('League', on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -67,8 +67,8 @@ class Team(models.Model):
     parent_organization_id = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
     first_year_of_play = models.IntegerField(null=True, blank=True)
     sport_id = models.ForeignKey('Sport', on_delete=models.CASCADE, null=True, blank=True)
-    league_id =  models.ForeignKey('League', on_delete=models.CASCADE, null=True, blank=True)
-    division_id =  models.ForeignKey('Division', on_delete=models.CASCADE, null=True, blank=True)
+    league_id = models.ForeignKey('League', on_delete=models.CASCADE, null=True, blank=True)
+    division_id = models.ForeignKey('Division', on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -86,4 +86,3 @@ class Venue(models.Model):
 
     def __str__(self):
         return self.name
-

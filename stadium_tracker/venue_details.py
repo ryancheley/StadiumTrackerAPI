@@ -21,4 +21,3 @@ def get_venue_total(venue_id):
         .values("total")
     )
     return venue_total
-
