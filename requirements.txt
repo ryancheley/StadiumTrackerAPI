@@ -19,7 +19,7 @@ django-heroku==0.3.1
 django-nose==1.4.6
 django-registration==3.1.2
 django-rest-swagger==2.2.0
-djangorestframework==3.11.0
+djangorestframework==3.11.2
 drf-yasg==1.17.1
 entrypoints==0.3
 flake8==3.8.2
